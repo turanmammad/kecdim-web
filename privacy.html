@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keçdim — Məxfilik Siyasəti</title>
+<style>
+  :root { --g:#16A34A; --ink:#1C2321; --muted:#6B7671; --bg:#FAFAF7; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+         font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+         line-height:1.65; }
+  .wrap { max-width:760px; margin:0 auto; padding:32px 22px 80px; }
+  header { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+  .logo { width:40px; height:40px; border-radius:11px; background:var(--g); display:flex;
+          align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:20px; }
+  h1 { font-size:28px; margin:18px 0 4px; }
+  h2 { font-size:19px; margin:30px 0 8px; }
+  .date { color:var(--muted); font-size:14px; }
+  p, li { color:#3C453F; }
+  a { color:var(--g); }
+  .card { background:#fff; border:1px solid rgba(28,35,33,.08); border-radius:14px; padding:2px 20px; margin-top:14px; }
+  footer { margin-top:40px; color:var(--muted); font-size:13px; }
+  code { background:#eef2ee; padding:1px 6px; border-radius:6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">K</div>
+    <strong>Keçdim</strong>
+  </header>
+  <h1>Məxfilik Siyasəti</h1>
+  <div class="date">Qüvvəyə minmə tarixi: 25 iyul 2026</div>
+
+  <p>Keçdim (“tətbiq”) imtahan hazırlığı üçün təhsil tətbiqidir. Bu siyasət hansı məlumatı topladığımızı,
+     niyə topladığımızı və onu necə qoruduğumuzu izah edir. Məxfiliyinə hörmət edirik və məlumatını
+     yalnız xidməti təqdim etmək üçün istifadə edirik.</p>
+
+  <h2>Hansı məlumatı toplayırıq</h2>
+  <div class="card">
+  <ul>
+    <li><b>Hesab məlumatı:</b> tətbiq açılanda avtomatik anonim identifikator yaradılır. Könüllü qeydiyyatdan
+        keçsən, <b>e-poçt ünvanın və parolun</b> (şifrələnmiş) saxlanılır.</li>
+    <li><b>Təhsil fəaliyyəti:</b> sınaq nəticələrin, verdiyin cavablar, səhvlərin, ardıcıllıq (streak),
+        seçdiyin imtahan və qeyd etdiyin imtahan tarixi.</li>
+    <li><b>Bildiriş:</b> push bildirişləri göndərmək üçün cihazının bildiriş tokeni.</li>
+    <li><b>Anonim istifadə statistikası:</b> tətbiqin yaxşılaşdırılması üçün ümumi istifadə hadisələri.</li>
+  </ul>
+  </div>
+
+  <h2>Niyə toplayırıq</h2>
+  <p>Məlumat yalnız: (1) təhsil xidmətini təqdim etmək, (2) irəliləyişini saxlamaq və cihazlar arasında
+     sinxronlaşdırmaq, (3) istəsən xatırlatma bildirişləri göndərmək üçün istifadə olunur.
+     Məlumatını <b>satmırıq</b> və reklam məqsədilə istifadə etmirik.</p>
+
+  <h2>Üçüncü tərəf xidmətləri</h2>
+  <p>Xidməti işlətmək üçün etibarlı təchizatçılardan istifadə edirik:</p>
+  <ul>
+    <li><b>Supabase</b> — məlumat saxlama və autentifikasiya.</li>
+    <li><b>Google Firebase Cloud Messaging</b> — push bildirişlərin çatdırılması.</li>
+  </ul>
+  <p>Tətbiqdə reklam şəbəkələri və ya üçüncü tərəf izləmə (tracking) vasitələri <b>yoxdur</b>.</p>
+
+  <h2>Məlumatın saxlanması və silinməsi</h2>
+  <p>Məlumatın hesabın aktiv olduğu müddətdə saxlanılır. İstədiyin vaxt tətbiqin içindən
+     <b>Profil → Parametrlər → Hesabı sil</b> vasitəsilə hesabını və bütün əlaqəli məlumatı
+     həmişəlik silə bilərsən. Silmə dərhal serverdən icra olunur.</p>
+
+  <h2>Təhlükəsizlik</h2>
+  <p>Məlumat sətir səviyyəsində icazələrlə (Row Level Security) qorunur — hər istifadəçi yalnız
+     öz məlumatına çıxış edə bilir. Şifrələr şifrələnmiş formada saxlanılır.</p>
+
+  <h2>Uşaqlar</h2>
+  <p>Tətbiq imtahana hazırlaşan istifadəçilər üçün nəzərdə tutulub. 13 yaşdan kiçik uşaqlardan
+     bilərəkdən şəxsi məlumat toplamırıq.</p>
+
+  <h2>Dəyişikliklər</h2>
+  <p>Bu siyasəti zaman-zaman yeniləyə bilərik. Yenilənmə bu səhifədə dərc olunacaq.</p>
+
+  <h2>Əlaqə</h2>
+  <p>Suallar üçün: <a href="mailto:turanmammad@gmail.com">turanmammad@gmail.com</a></p>
+
+  <footer>© 2026 Keçdim. Bütün hüquqlar qorunur. · <a href="support.html">Dəstək</a></footer>
+</div>
+</body>
+</html>
