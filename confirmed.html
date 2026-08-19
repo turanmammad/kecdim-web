@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>E-poçt təsdiqləndi — Keçdim</title>
+<style>
+  :root { --ink:#1C2321; --bg:#FAFAF7; --muted:#6B7671; --brand:#16A34A; --card:#fff; --line:#EEF0EC; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink:#F2F5F2; --bg:#131715; --muted:#9AA49D; --card:#1C2321; --line:#2A312E; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+         font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+         display:flex; align-items:center; justify-content:center; min-height:100vh; padding:24px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:20px;
+          padding:36px 28px; max-width:440px; width:100%; text-align:center; }
+  .tick { width:76px; height:76px; border-radius:50%; background:var(--brand);
+          display:flex; align-items:center; justify-content:center; margin:0 auto 20px; }
+  .tick svg { width:38px; height:38px; }
+  h1 { font-size:22px; margin:0 0 10px; }
+  p { color:var(--muted); font-size:15px; margin:0 0 8px; }
+  .hint { margin-top:22px; padding:14px; background:var(--bg); border-radius:12px;
+          font-size:13px; color:var(--muted); }
+  .err { display:none; }
+  body.error .ok { display:none; }
+  body.error .err { display:block; }
+  body.error .tick { background:#E5484D; }
+  footer { margin-top:20px; font-size:12px; color:var(--muted); }
+  a { color:var(--brand); }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="tick">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path class="ok" d="M4 12.5l5 5L20 6.5"/>
+      <path class="err" d="M6 6l12 12M18 6L6 18"/>
+    </svg>
+  </div>
+
+  <div class="ok">
+    <h1>E-poçtun təsdiqləndi</h1>
+    <p>Hesabın hazırdır. İndi <b>Keçdim</b> tətbiqinə qayıt və e-poçtunla daxil ol.</p>
+    <div class="hint">Nəticələrin, streak-in və səhv siyahın hesabına bağlandı —
+      telefonunu dəyişsən də itməyəcək.</div>
+  </div>
+
+  <div class="err">
+    <h1>Link işləmədi</h1>
+    <p>Təsdiq linkinin vaxtı bitib və ya artıq istifadə olunub.</p>
+    <div class="hint">Tətbiqdə yenidən «Hesab yarat» addımını təkrarla —
+      yeni təsdiq məktubu göndəriləcək.</div>
+  </div>
+
+  <footer>
+    © 2026 Keçdim · Müstəqil tətbiq — dövlət qurumu ilə əlaqəli deyil ·
+    <a href="privacy.html">Məxfilik</a> · <a href="support.html">Dəstək</a>
+  </footer>
+</div>
+
+<script>
+  // Supabase təsdiq xətanı fragment (#error=...) və ya query (?error=...) ilə qaytarır.
+  var q = new URLSearchParams(location.search);
+  var h = new URLSearchParams(location.hash.replace(/^#/, ''));
+  if (q.get('error') || h.get('error') || q.get('error_description') || h.get('error_description')) {
+    document.body.classList.add('error');
+  }
+</script>
+</body>
+</html>
