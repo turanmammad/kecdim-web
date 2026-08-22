@@ -1,61 +1,282 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="az">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Keçdim — İmtahana real formatda hazırlaş</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Keçdim — Azərbaycanın imtahan hazırlığı platforması</title>
+<meta name="description" content="Sürücülük, buraxılış, Dövlət Qulluğu, MİQ, sertifikasiya və magistratura imtahanlarına real formatda hazırlaş: 2200+ izahlı sual, sınaq imtahanları, fərdi plan.">
+<link rel="canonical" href="https://kecdim.pro-tech.az/">
+<meta name="theme-color" content="#16A34A">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2316A34A'/%3E%3Cpath d='M8 17l5 5L24 10' stroke='white' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Keçdim">
+<meta property="og:locale" content="az_AZ">
+<meta property="og:title" content="Keçdim — Azərbaycanın imtahan hazırlığı platforması">
+<meta property="og:description" content="Sürücülük, buraxılış, Dövlət Qulluğu, MİQ, sertifikasiya və magistratura imtahanlarına real formatda hazırlaş: 2200+ izahlı sual, sınaq imtahanları, fərdi plan.">
+<meta property="og:url" content="https://kecdim.pro-tech.az/">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600&family=Archivo:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root { --g:#16A34A; --gd:#0F6E33; --ink:#1C2321; --muted:#6B7671; --bg:#FAFAF7; }
-  * { box-sizing:border-box; }
-  body { margin:0; background:var(--bg); color:var(--ink);
-         font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; line-height:1.6; }
-  .hero { background:linear-gradient(135deg,var(--g),var(--gd)); color:#fff; padding:64px 22px 72px; text-align:center; }
-  .logo { width:64px; height:64px; border-radius:16px; background:#fff; color:var(--g); display:inline-flex;
-          align-items:center; justify-content:center; font-weight:800; font-size:32px; margin-bottom:18px; }
-  h1 { font-size:34px; margin:6px 0 10px; }
-  .sub { font-size:17px; opacity:.92; max-width:520px; margin:0 auto; }
-  .pills { margin:22px auto 0; display:flex; flex-wrap:wrap; gap:8px; justify-content:center; max-width:520px; }
-  .pill { background:#fff; color:var(--gd); border-radius:999px; padding:7px 15px; font-weight:700; font-size:14px; }
-  .wrap { max-width:680px; margin:0 auto; padding:36px 22px 60px; }
-  .feat { display:grid; gap:14px; }
-  .card { background:#fff; border:1px solid rgba(28,35,33,.08); border-radius:14px; padding:16px 18px; }
-  .card b { display:block; margin-bottom:2px; }
-  .card p { margin:0; color:#3C453F; font-size:15px; }
-  .links { text-align:center; margin-top:34px; }
-  .links a { color:var(--g); margin:0 10px; font-weight:600; }
-  footer { text-align:center; color:var(--muted); font-size:13px; padding:20px; }
+body{margin:0;background:#FAFAF7;font-family:Inter,system-ui,sans-serif;color:#1C2321}
+a{color:#16A34A;text-decoration:none}a:hover{color:#15803D}
+html{scroll-behavior:smooth}
+@keyframes ld-fadeup{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:none}}
+@keyframes ld-floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes ld-draw{100%{stroke-dashoffset:0}}
 </style>
+<style>
+/* Dizayn masaüstü üçün sabit ölçülərlə qurulub; telefonda daralsın. */
+@media (max-width:820px){
+  [style*="padding:88px 32px"],[style*="padding:64px 32px"],[style*="padding:16px 32px"],
+  [style*="padding:40px 32px"],[style*="padding:0 32px"]{padding-left:20px!important;padding-right:20px!important}
+  [style*="font:800 58px"]{font-size:38px!important;line-height:1.12!important}
+  [style*="font:800 44px"]{font-size:32px!important}
+  [style*="font:800 36px"]{font-size:27px!important}
+  [style*="font:800 34px"]{font-size:26px!important}
+  [style*="font:800 32px"]{font-size:25px!important}
+  [style*="min-width:380px"],[style*="min-width:340px"],[style*="min-width:320px"],
+  [style*="min-width:300px"]{min-width:100%!important}
+  [style*="padding:64px 48px"]{padding:40px 22px!important}
+  [style*="padding:44px 44px 44px"]{padding:28px 22px!important}
+}
+@media (max-width:600px){
+  nav a,[style*="gap:26px"]{gap:14px!important}
+  [style*="width:340px"]{width:100%!important}
+}
+/* Klaviatura ilə gəzənlər üçün görünən fokus — dizaynda yox idi. */
+a:focus-visible{outline:3px solid #16A34A;outline-offset:3px;border-radius:6px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"MobileApplication","name":"Keçdim","applicationCategory":"EducationalApplication","operatingSystem":"iOS, Android","inLanguage":"az-AZ","description":"Sürücülük, buraxılış, Dövlət Qulluğu, MİQ, sertifikasiya və magistratura imtahanlarına real formatda hazırlaş: 2200+ izahlı sual, sınaq imtahanları, fərdi plan.","downloadUrl":["https://apps.apple.com/az/app/ke%C3%A7dim/id6793411739","https://play.google.com/store/apps/details?id=az.kecdim"],"offers":{"@type":"Offer","price":"0","priceCurrency":"AZN"},"publisher":{"@type":"Organization","name":"Protech LLC","url":"https://pro-tech.az"}}</script>
 </head>
 <body>
-  <div class="hero">
-    <div class="logo">K</div>
-    <h1>Keçdim</h1>
-    <div class="sub">4 dövlət imtahanına real formatda hazırlaş — sınaq, izahlı suallar və imtahan təqvimi bir tətbiqdə.</div>
-    <div class="pills">
-      <span class="pill">Sürücülük · DYP</span>
-      <span class="pill">Dövlət Qulluğu</span>
-      <span class="pill">MİQ</span>
-      <span class="pill">Magistratura</span>
-    </div>
-  </div>
-  <div class="wrap">
-    <div class="feat">
-      <div class="card"><b>Real imtahan formatı</b><p>Eyni sual sayı, eyni vaxt, eyni qaydalar. İmtahan günü sürpriz olmayacaq.</p></div>
-      <div class="card"><b>İzahlı suallar</b><p>Hər suala cavab izahı — niyə düz, niyə səhv olduğunu öyrən.</p></div>
-      <div class="card"><b>Səhvlərini bağla</b><p>«Səhvlərim» bölməsi zəif yerlərini toplayır, üzərində işlə.</p></div>
-      <div class="card"><b>Oflayn məşq</b><p>İnternet olmadan da suallar üzərində işləyə bilərsən.</p></div>
-    </div>
-    <div class="links">
-      <a href="privacy.html">Məxfilik Siyasəti</a> ·
-      <a href="support.html">Dəstək</a>
-    </div>
-  </div>
-  <p style="margin-top:26px;font-size:13px;line-height:1.6;color:var(--muted)">
-    <b>Keçdim müstəqil hazırlıq tətbiqidir.</b> Heç bir dövlət qurumu ilə əlaqəli deyil,
-    onlar tərəfindən dəstəklənmir və ya təsdiqlənmir. Rəsmi imtahan tarixləri və qaydaları üçün:
-    <a href="https://dim.gov.az" target="_blank" rel="noopener">dim.gov.az</a> (MİQ, Dövlət Qulluğu, Magistratura) ·
-    <a href="https://dyp.gov.az" target="_blank" rel="noopener">dyp.gov.az</a> (sürücülük).
-  </p>
-  <footer>© 2026 Keçdim · Müstəqil tətbiq · <a href="privacy.html">Məxfilik</a> · <a href="support.html">Dəstək</a></footer>
+<!-- NAV -->
+<div style="position:sticky;top:0;z-index:50;background:rgba(250,250,247,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(28,35,33,.07)">
+<div style="max-width:1120px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;gap:36px">
+<div style="font:800 24px Manrope,sans-serif;letter-spacing:-.5px">Ke<span style="position:relative;display:inline-block">c<svg style="position:absolute;left:48%;bottom:1px;transform:translateX(-50%)" width="9" height="7" viewBox="0 0 24 18" fill="none" stroke="#16A34A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5l5.5 5.5L21 2.5"></path></svg></span>dim</div>
+<div style="display:flex;gap:26px;font:500 14px Inter;margin-left:auto">
+<a href="#imtahanlar">İmtahanlar</a>
+<a href="#xususiyyetler">Xüsusiyyətlər</a>
+<a href="#qiymet">Qiymət</a>
+<a href="/bloq.html">Bloq</a>
+<a href="#elaqe">Əlaqə</a>
+</div>
+<a href="#yukle" style="padding:11px 22px;background:#16A34A;border-radius:12px;font:600 14px Inter;color:#FFFFFF">Tətbiqi yüklə</a>
+</div>
+</div>
+
+<!-- HERO -->
+<div style="background:radial-gradient(120% 130% at 20% 0%,#1FB25A 0%,#16A34A 55%,#149244 100%);overflow:hidden">
+<div style="max-width:1120px;margin:0 auto;padding:88px 32px 0;display:flex;gap:56px;align-items:flex-end;flex-wrap:wrap">
+<div style="flex:1;min-width:380px;padding-bottom:88px">
+<div style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:999px;font:600 13px Inter;color:#FFFFFF;animation:ld-fadeup .5s ease-out both">Azərbaycanın imtahan hazırlığı platforması</div>
+<div style="font:800 58px/1.1 Manrope,sans-serif;color:#FFFFFF;margin-top:24px;letter-spacing:-1.5px;text-wrap:pretty;animation:ld-fadeup .5s ease-out .1s both">İlk dəfədən keç.</div>
+<div style="font:400 19px/1.6 Inter;color:rgba(255,255,255,.88);margin-top:20px;max-width:480px;text-wrap:pretty;animation:ld-fadeup .5s ease-out .2s both">Sürücülükdən buraxılışa, Dövlət Qulluğundan müəllim sertifikasiyasına — Azərbaycanın əsas imtahanlarına real formatda hazırlaş: izahlı suallar, sınaq imtahanları, fərdi plan.</div>
+<div id="yukle" style="display:flex;gap:14px;margin-top:36px;flex-wrap:wrap;animation:ld-fadeup .5s ease-out .3s both">
+<a href="https://apps.apple.com/az/app/ke%C3%A7dim/id6793411739" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;padding:14px 26px;background:#1C2321;border-radius:14px;color:#FFFFFF"><svg width="20" height="24" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.225.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg><span style="text-align:left"><span style="display:block;font:400 10px Inter;opacity:.75">Yüklə</span><span style="font:600 15px Inter">App Store</span></span></a>
+<a href="https://play.google.com/store/apps/details?id=az.kecdim" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;padding:14px 26px;background:#1C2321;border-radius:14px;color:#FFFFFF"><svg width="20" height="22" viewBox="0 0 512 512" aria-hidden="true"><path fill="#EA4335" d="M48 59.5v393c0 5.7 6.5 9.2 11.3 6.1l204.6-196.4-204.6-208.8C54.5 50.3 48 53.8 48 59.5z"/><path fill="#FBBC04" d="M389.5 226.5l-79.7-45.7-89.4 85.4 89.4 85.8 79.7-45.7c22.4-12.8 22.4-67 0-79.8z"/><path fill="#4285F4" d="M59.3 52.4l250.5 128.4-89.4 85.4z"/><path fill="#34A853" d="M59.3 459.6l161.1-193.4 89.4 85.8z"/></svg><span style="text-align:left"><span style="display:block;font:400 10px Inter;opacity:.75">Yüklə</span><span style="font:600 15px Inter">Google Play</span></span></a>
+</div>
+<div style="display:flex;gap:32px;margin-top:44px;animation:ld-fadeup .5s ease-out .4s both">
+<div><div style="font:800 26px Manrope,sans-serif;color:#FFFFFF">6</div><div style="font:400 13px Inter;color:rgba(255,255,255,.75)">imtahan növü</div></div>
+<div><div style="font:800 26px Manrope,sans-serif;color:#FFFFFF">2000+</div><div style="font:400 13px Inter;color:rgba(255,255,255,.75)">izahlı sual</div></div>
+<div><div style="font:800 26px Manrope,sans-serif;color:#FFFFFF">100%</div><div style="font:400 13px Inter;color:rgba(255,255,255,.75)">real format</div></div>
+</div>
+</div>
+<div style="width:340px;flex:none;animation:ld-fadeup .6s ease-out .3s both">
+<div style="width:340px;background:#FAFAF7;border-radius:40px 40px 0 0;border:6px solid #0E100F;border-bottom:none;padding:44px 22px 30px;box-shadow:0 30px 80px rgba(0,0,0,.35);animation:ld-floaty 5s ease-in-out infinite">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<span style="font:600 15px Inter">Salam, Orxan 👋</span>
+<span style="padding:6px 11px;background:rgba(245,184,65,.16);border-radius:999px;font:600 12px Inter;color:#A16207">🔥 6 gün</span>
+</div>
+<div style="background:#FFFFFF;border-radius:16px;padding:14px 16px;margin-top:14px;box-shadow:0 2px 8px rgba(28,35,33,.06);display:flex;align-items:center;gap:14px">
+<svg width="56" height="56" viewBox="0 0 84 84"><circle cx="42" cy="42" r="34" fill="none" stroke="#E8ECE7" stroke-width="9"></circle><circle cx="42" cy="42" r="34" fill="none" stroke="#16A34A" stroke-width="9" stroke-linecap="round" stroke-dasharray="145 214" transform="rotate(-90 42 42)"></circle><text x="42" y="50" text-anchor="middle" font-family="Manrope" font-weight="800" font-size="20" fill="#1C2321">68%</text></svg>
+<div><div style="font:600 14px Inter">Ümumi hazırlıq</div><div style="font:400 12px Inter;color:#6B7671">134 sual həll etdin</div></div>
+</div>
+<div style="background:radial-gradient(130% 160% at 20% 15%,#1FB25A,#16A34A 62%,#149244);border-radius:16px;padding:14px 16px;margin-top:10px;display:flex;align-items:center;gap:12px">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 13l5 5L19.5 6.5"></path></svg>
+<div style="flex:1"><div style="font:800 14px Manrope,sans-serif;color:#FFF">Günün sınağı</div><div style="font:400 11px Inter;color:rgba(255,255,255,.85)">20 sual · real format</div></div>
+<span style="padding:8px 13px;background:#FFF;border-radius:10px;font:600 12px Inter;color:#15803D">Başla</span>
+</div>
+<div style="background:#FFFFFF;border-radius:16px;padding:12px 16px;margin-top:10px;box-shadow:0 2px 8px rgba(28,35,33,.06)">
+<div style="display:flex;justify-content:space-between;font:600 13px Inter"><span>Davam et</span><span style="color:#16A34A">12/20 →</span></div>
+<div style="height:7px;border-radius:4px;background:#E8ECE7;margin-top:9px"><div style="width:60%;height:7px;border-radius:4px;background:#16A34A"></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- İMTAHANLAR -->
+<div id="imtahanlar" style="max-width:1120px;margin:0 auto;padding:88px 32px 0">
+<div style="font:800 36px Manrope,sans-serif;letter-spacing:-1px;text-wrap:pretty">Bütün əsas imtahanlar, bir tətbiq</div>
+<div style="font:400 16px/1.6 Inter;color:#6B7671;margin-top:10px;max-width:560px">Hər imtahanın öz sual bazası, öz qaydaları və öz keçid həddi — hamısı rəsmi formata uyğun. Siyahı genişlənir.</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:40px">
+<div style="background:#FFFFFF;border-radius:20px;padding:28px;box-shadow:0 2px 12px rgba(28,35,33,.06);border-top:4px solid #16A34A">
+<span style="width:52px;height:52px;border-radius:50%;background:rgba(22,163,74,.10);display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="6" rx="2"></rect><path d="M6 11l2-4h8l2 4"></path><circle cx="8" cy="19" r="1.4"></circle><circle cx="16" cy="19" r="1.4"></circle></svg></span>
+<div style="font:800 19px Manrope,sans-serif;margin-top:16px">Sürücülük · DYP</div>
+<div style="font:400 14px/1.6 Inter;color:#6B7671;margin-top:8px">20 sual · 20 dəqiqə · keçid 17. Yol nişanları, üstünlük, manevr, cərimələr.</div>
+</div>
+<div style="background:#FFFFFF;border-radius:20px;padding:28px;box-shadow:0 2px 12px rgba(28,35,33,.06);border-top:4px solid #0D9488">
+<span style="width:52px;height:52px;border-radius:50%;background:rgba(13,148,136,.10);display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 6H4z"></path><path d="M6 9v8"></path><path d="M14 9v8"></path><path d="M4 20h16"></path></svg></span>
+<div style="font:800 19px Manrope,sans-serif;margin-top:16px">Dövlət Qulluğu</div>
+<div style="font:400 14px/1.6 Inter;color:#6B7671;margin-top:8px">100 sual · 4 fənn · 3 saat. Qanunvericilik, məntiq, informatika, dil. AA–BB alt-qrupları.</div>
+</div>
+<div style="background:#FFFFFF;border-radius:20px;padding:28px;box-shadow:0 2px 12px rgba(28,35,33,.06);border-top:4px solid #4F46E5">
+<span style="width:52px;height:52px;border-radius:50%;background:rgba(79,70,229,.10);display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v12H4z"></path><path d="M8 10h8"></path><path d="M8 14h5"></path></svg></span>
+<div style="font:800 19px Manrope,sans-serif;margin-top:16px">MİQ — Müəllim</div>
+<div style="font:400 14px/1.6 Inter;color:#6B7671;margin-top:8px">İxtisas + metodika + məntiq. İxtisasına görə sual bazası, müsahibə həddi şkalası.</div>
+</div>
+<div style="background:#FFFFFF;border-radius:20px;padding:28px;box-shadow:0 2px 12px rgba(28,35,33,.06);border-top:4px solid #65A30D">
+<span style="width:52px;height:52px;border-radius:50%;background:rgba(101,163,13,.10);display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#65A30D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l9-4 9 4-9 4z"></path><path d="M7 11v5c0 1.5 2.5 3 5 3s5-1.5 5-3v-5"></path></svg></span>
+<div style="font:800 19px Manrope,sans-serif;margin-top:16px">Magistratura</div>
+<div style="font:400 14px/1.6 Inter;color:#6B7671;margin-top:8px">Məntiq, informatika və xarici dil. Esse tapşırığı və AI qiymətləndirmə ilə.</div>
+</div>
+<div style="background:#FFFFFF;border-radius:20px;padding:28px;box-shadow:0 2px 12px rgba(28,35,33,.06);border-top:4px solid #F5B841">
+<span style="width:52px;height:52px;border-radius:50%;background:rgba(245,184,65,.16);display:flex;align-items:center;justify-content:center;font:800 18px Manrope,sans-serif;color:#A16207">11</span>
+<div style="font:800 19px Manrope,sans-serif;margin-top:16px">Buraxılış · 11-ci sinif</div>
+<div style="font:400 14px/1.6 Inter;color:#6B7671;margin-top:8px">Azərbaycan dili, riyaziyyat və xarici dil — DİM buraxılış imtahanı formatında.</div>
+</div>
+<div style="background:#FFFFFF;border-radius:20px;padding:28px;box-shadow:0 2px 12px rgba(28,35,33,.06);border-top:4px solid #E5484D">
+<span style="width:52px;height:52px;border-radius:50%;background:rgba(229,72,77,.08);display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C43B40" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"></circle><path d="M9 13.5L7.5 21l4.5-2.5L16.5 21 15 13.5"></path></svg></span>
+<div style="font:800 19px Manrope,sans-serif;margin-top:16px">Müəllim Sertifikasiyası</div>
+<div style="font:400 14px/1.6 Inter;color:#6B7671;margin-top:8px">Fənn bilikləri + metodika. Sertifikat 5 il qüvvədədir — hazır gedənlər üçün.</div>
+</div>
+</div>
+</div>
+
+<!-- XÜSUSİYYƏTLƏR -->
+<div id="xususiyyetler" style="max-width:1120px;margin:0 auto;padding:88px 32px 0">
+<div style="font:800 36px Manrope,sans-serif;letter-spacing:-1px">Niyə Keçdim?</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-top:40px">
+<div style="background:#FFFFFF;border-radius:20px;padding:28px;box-shadow:0 2px 12px rgba(28,35,33,.06)">
+<span style="font-size:26px">🎯</span>
+<div style="font:800 17px Manrope,sans-serif;margin-top:12px">Real imtahan formatı</div>
+<div style="font:400 14px/1.6 Inter;color:#6B7671;margin-top:8px">Eyni sual sayı, eyni taymer, eyni keçid həddi. İmtahan günü heç nə sürpriz olmayacaq.</div>
+</div>
+<div style="background:#FFFFFF;border-radius:20px;padding:28px;box-shadow:0 2px 12px rgba(28,35,33,.06)">
+<span style="font-size:26px">💡</span>
+<div style="font:800 17px Manrope,sans-serif;margin-top:12px">Hər sualın izahı</div>
+<div style="font:400 14px/1.6 Inter;color:#6B7671;margin-top:8px">Cavabı əzbərləmirsən — niyəsini başa düşürsən. Sual dəyişsə də, sən keçirsən.</div>
+</div>
+<div style="background:#FFFFFF;border-radius:20px;padding:28px;box-shadow:0 2px 12px rgba(28,35,33,.06)">
+<span style="font-size:26px">🔁</span>
+<div style="font:800 17px Manrope,sans-serif;margin-top:12px">Səhvlərin unudulmur</div>
+<div style="font:400 14px/1.6 Inter;color:#6B7671;margin-top:8px">Səhv etdiyin hər sual avtomatik təkrar siyahısına düşür — zəif yerlərin bağlanır.</div>
+</div>
+<div style="background:#FFFFFF;border-radius:20px;padding:28px;box-shadow:0 2px 12px rgba(28,35,33,.06)">
+<span style="font-size:26px">📊</span>
+<div style="font:800 17px Manrope,sans-serif;margin-top:12px">Ətraflı hesabat</div>
+<div style="font:400 14px/1.6 Inter;color:#6B7671;margin-top:8px">Mövzular üzrə düzgünlük, bal dinamikası və imtahan gününə hazırlıq proqnozu.</div>
+</div>
+<div style="background:#FFFFFF;border-radius:20px;padding:28px;box-shadow:0 2px 12px rgba(28,35,33,.06)">
+<span style="font-size:26px">🗓</span>
+<div style="font:800 17px Manrope,sans-serif;margin-top:12px">Fərdi plan + təqvim</div>
+<div style="font:400 14px/1.6 Inter;color:#6B7671;margin-top:8px">İmtahan tarixini qeyd et — gündəlik plan avtomatik qurulur, rəsmi tarixlər xatırlatma ilə gəlir.</div>
+</div>
+<div style="background:#FFFFFF;border-radius:20px;padding:28px;box-shadow:0 2px 12px rgba(28,35,33,.06)">
+<span style="font-size:26px">📱</span>
+<div style="font:800 17px Manrope,sans-serif;margin-top:12px">Offline + qeydiyyatsız</div>
+<div style="font:400 14px/1.6 Inter;color:#6B7671;margin-top:8px">Hesab yaratmadan başla, internetsiz həll et — nəticələr qayıdanda sinxronlaşır.</div>
+</div>
+</div>
+</div>
+
+<!-- QIYMƏT -->
+<div id="qiymet" style="max-width:1120px;margin:0 auto;padding:88px 32px 0">
+<div style="font:800 36px Manrope,sans-serif;letter-spacing:-1px">Sadə qiymət</div>
+<div style="font:400 16px Inter;color:#6B7671;margin-top:10px">Pulsuz başla. Hazır olanda Keçdim+ ilə hər şeyi aç.</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:40px;max-width:860px">
+<div style="background:#FFFFFF;border-radius:20px;padding:32px;box-shadow:0 2px 12px rgba(28,35,33,.06)">
+<div style="font:600 14px Inter;color:#6B7671">Pulsuz</div>
+<div style="font:800 34px Manrope,sans-serif;margin-top:8px">0 ₼</div>
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:20px;font:400 14px/1.5 Inter;color:#3C453F">
+<span>✓ Gündəlik sual limiti</span><span>✓ 1 sınaq imtahanı / gün</span><span>✓ Əsas statistika</span><span>✓ Qeydiyyatsız istifadə</span>
+</div>
+</div>
+<div style="background:#1C2321;border-radius:20px;padding:32px;position:relative;color:#FFFFFF;box-shadow:0 12px 40px rgba(28,35,33,.25)">
+<span style="position:absolute;top:-12px;left:32px;padding:5px 14px;background:#16A34A;border-radius:999px;font:600 11px Inter">ƏN POPULYAR</span>
+<div style="font:600 14px Inter;color:#22C55E">Keçdim+</div>
+<div style="font:800 34px Manrope,sans-serif;margin-top:8px">14.99 ₼ <span style="font:400 14px Inter;color:#8A948D">/ 3 ay</span></div>
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:20px;font:400 14px/1.5 Inter;color:#DCE3DC">
+<span>✓ Limitsiz sual və sınaq</span><span>✓ AI izahlar + təhlil</span><span>✓ Fərdi plan + 4 imtahan</span><span>✓ Reklamsız · 3 gün pulsuz</span>
+</div>
+<a href="#yukle" style="display:flex;align-items:center;justify-content:center;height:48px;background:#16A34A;border-radius:12px;font:600 15px Inter;color:#FFFFFF;margin-top:24px">Pulsuz sına</a>
+</div>
+<div style="background:#FFFFFF;border-radius:20px;padding:32px;box-shadow:0 2px 12px rgba(28,35,33,.06)">
+<div style="font:600 14px Inter;color:#6B7671">Digər planlar</div>
+<div style="display:flex;flex-direction:column;gap:14px;margin-top:20px">
+<div style="display:flex;justify-content:space-between;font:500 15px Inter"><span>Aylıq</span><b style="font-family:Manrope">6.99 ₼</b></div>
+<div style="display:flex;justify-content:space-between;font:500 15px Inter"><span>İllik</span><b style="font-family:Manrope">29.99 ₼</b></div>
+</div>
+<div style="font:400 13px/1.6 Inter;color:#6B7671;margin-top:20px">İnstruktor və kurslar üçün promo kod sistemi mövcuddur — əlaqə saxlayın.</div>
+</div>
+</div>
+</div>
+
+<!-- CTA BAND -->
+<div style="max-width:1120px;margin:88px auto 0;padding:0 32px">
+<div style="background:radial-gradient(120% 160% at 20% 10%,#1FB25A 0%,#16A34A 58%,#149244 100%);border-radius:28px;padding:64px 48px;text-align:center;position:relative;overflow:hidden">
+<svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity:.95"><path d="M4.5 13l5 5L19.5 6.5" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" style="animation:ld-draw .8s cubic-bezier(.22,1,.36,1) .3s forwards"></path></svg>
+<div style="font:800 34px/1.2 Manrope,sans-serif;color:#FFFFFF;margin-top:16px;letter-spacing:-1px">İmtahanına bu gün hazırlaşmağa başla</div>
+<div style="font:400 16px Inter;color:rgba(255,255,255,.85);margin-top:12px">Qeydiyyatsız. Pulsuz. 2 dəqiqəyə ilk testini həll et.</div>
+<div style="display:flex;gap:14px;justify-content:center;margin-top:32px;flex-wrap:wrap">
+<a href="https://apps.apple.com/az/app/ke%C3%A7dim/id6793411739" target="_blank" rel="noopener" style="padding:15px 32px;background:#FFFFFF;border-radius:14px;font:600 15px Inter;color:#15803D">App Store</a>
+<a href="https://play.google.com/store/apps/details?id=az.kecdim" target="_blank" rel="noopener" style="padding:15px 32px;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.4);border-radius:14px;font:600 15px Inter;color:#FFFFFF">Google Play</a>
+</div>
+</div>
+</div>
+
+<!-- FOOTER / ƏLAQƏ -->
+<div id="elaqe" style="background:#1C2321;margin-top:88px">
+<div style="max-width:1120px;margin:0 auto;padding:64px 32px 40px;color:#DCE3DC">
+<div style="display:flex;gap:56px;flex-wrap:wrap;justify-content:space-between">
+<div style="max-width:320px">
+<div style="font:800 26px Manrope,sans-serif;color:#FFFFFF">Ke<span style="position:relative;display:inline-block">c<svg style="position:absolute;left:48%;bottom:1px;transform:translateX(-50%)" width="10" height="8" viewBox="0 0 24 18" fill="none" stroke="#22C55E" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5l5.5 5.5L21 2.5"></path></svg></span>dim</div>
+<div style="font:400 14px/1.7 Inter;color:#8A948D;margin-top:14px">Azərbaycanın əsas imtahanlarına hazırlıq platforması — sürücülük, buraxılış, Dövlət Qulluğu, MİQ, sertifikasiya və magistratura.</div>
+</div>
+<div>
+<div style="font:600 13px Inter;color:#8A948D;letter-spacing:1px">ƏLAQƏ</div>
+<div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;font:500 15px Inter">
+<a href="mailto:info@pro-tech.az" style="color:#FFFFFF">✉ info@pro-tech.az</a>
+<a href="tel:+994993695333" style="color:#FFFFFF">📞 099 369 53 33</a>
+<a href="https://kecdim.pro-tech.az" style="color:#22C55E">🌐 kecdim.pro-tech.az</a>
+</div>
+</div>
+<div>
+<div style="font:600 13px Inter;color:#8A948D;letter-spacing:1px">KEÇİDLƏR</div>
+<div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;font:500 14px Inter">
+<a href="#imtahanlar" style="color:#DCE3DC">İmtahanlar</a>
+<a href="#xususiyyetler" style="color:#DCE3DC">Xüsusiyyətlər</a>
+<a href="#qiymet" style="color:#DCE3DC">Qiymət</a>
+<a href="/bloq.html" style="color:#DCE3DC">Bloq</a>
+</div>
+</div>
+<div>
+<div style="font:600 13px Inter;color:#8A948D;letter-spacing:1px">BLOQDAN SEÇMƏLƏR</div>
+<div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;font:500 14px/1.4 Inter;max-width:260px">
+<a href="/bloq-dyp-10-sehv.html" title="DYP sürücülük imtahanında ən çox səhv edilən suallar" style="color:#DCE3DC">DYP-də ən çox səhv edilən 10 sual</a>
+<a href="/bloq-dq-alt-qruplar.html" title="Dövlət qulluğu imtahanı alt-qrupları — AA, AB, AC, BA, BB" style="color:#DCE3DC">AA-dan BB-yə: alt-qrup fərqləri</a>
+<a href="/bloq-5-verdis.html" title="İmtahandan ilk dəfədən keçmək üçün hazırlıq strategiyası" style="color:#DCE3DC">İlk dəfədən keçənlərin 5 vərdişi</a>
+<a href="/bloq-vaxt-bolgusu.html" title="İmtahanda vaxt bölgüsü taktikası" style="color:#DCE3DC">İmtahan günü vaxt bölgüsü</a>
+</div>
+</div>
+<div>
+<div style="font:600 13px Inter;color:#8A948D;letter-spacing:1px">HÜQUQİ</div>
+<div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;font:500 14px Inter">
+<a href="/privacy.html" style="color:#DCE3DC">Məxfilik siyasəti</a>
+<a href="/terms.html" style="color:#DCE3DC">İstifadə şərtləri</a>
+</div>
+</div>
+</div>
+<div style="border-top:1px solid rgba(255,255,255,.08);margin-top:48px;padding-top:24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+<a href="https://pro-tech.az" title="Protech LLC — Technology & Engineering" style="display:flex;align-items:center;gap:12px">
+<span style="width:38px;height:38px;background:#F6F5F2;display:flex;align-items:center;justify-content:center;font:700 22px Archivo,sans-serif;color:#0D1117;flex:none">#</span>
+<span><span style="display:block;font:700 16px Archivo,sans-serif;color:#F6F5F2;letter-spacing:2px">PROTECH</span><span style="display:block;font:400 8.5px 'IBM Plex Mono',monospace;color:#8A948D;letter-spacing:2.5px;margin-top:2px">TECHNOLOGY &amp; ENGINEERING</span></span>
+</a>
+<span style="font:400 12px Inter;color:#8A948D;border-left:1px solid rgba(255,255,255,.14);padding-left:16px">Keçdim — <a href="https://pro-tech.az" style="color:#0F9488;color:#2DB3A8">Protech LLC</a> məhsuludur</span>
+<span style="margin-left:auto;font:400 12px Inter;color:#8A948D;max-width:400px">© 2026 Protech LLC. Keçdim müstəqil hazırlıq tətbiqidir — DİM, DYP və dövlət qurumları ilə rəsmi əlaqəsi yoxdur.</span>
+</div>
+</div>
+</div>
 </body>
 </html>
