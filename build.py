@@ -531,6 +531,34 @@ def inject_index_cards():
     return len(NEW_POSTS)
 
 
+
+def inject_ga_static():
+    """privacy/support/terms/confirmed əl ilə yazılmış statik fayllardır —
+    onlar həm də ÇIXIŞ faylıdır, ona görə injektor iki tərəfli olmalıdır:
+    GA_ID varsa köhnə bloku əvəzlə, boşdursa tamamilə SİL.
+    (Əks halda GA_ID-ni boşaltmaq köhnə tagı fayllarda qoyub gedir.)"""
+    tag = ""
+    if GA_ID:
+        tag = (f'<script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>\n'
+               '<script>window.dataLayer=window.dataLayer||[];'
+               'function gtag(){dataLayer.push(arguments)}gtag("js",new Date());'
+               f'gtag("config","{GA_ID}",{{"anonymize_ip":true,"allow_google_signals":false}});</script>\n')
+    n = 0
+    for name in ("privacy.html", "support.html", "terms.html", "confirmed.html"):
+        f = OUT / name
+        if not f.exists():
+            continue
+        t = f.read_text(encoding="utf-8")
+        cleaned = re.sub(
+            r'<script async src="https://www\.googletagmanager\.com/gtag/js\?id=[^"]*"></script>\n?'
+            r'<script>window\.dataLayer.*?</script>\n?', "", t, flags=re.S)
+        out = cleaned.replace("</head>", tag + "</head>", 1) if tag else cleaned
+        if out != t:
+            f.write_text(out, encoding="utf-8")
+            n += 1
+    return n
+
+
 def main() -> None:
     written = []
     for src in PAGES:
@@ -542,6 +570,7 @@ def main() -> None:
 
     written += build_new_posts()
     n = inject_index_cards()
+    inject_ga_static()
 
     # sitemap + robots
     urls = [SITE + "/"] + [
