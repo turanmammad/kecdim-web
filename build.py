@@ -44,7 +44,7 @@ SITE = "https://kecdim.pro-tech.az"
 #      ünvanını **Editor** kimi əlavə et — qalanını skript özü edər.
 #
 # ID yazılmayana qədər səhifələrə HEÇ BİR sayğac qoyulmur (boş/sınıq teq yox).
-GA_ID = ""   # məsələn: "G-XXXXXXXXXX"
+GA_ID = "G-FXBNW1V7D0"
 
 APP_STORE = "https://apps.apple.com/az/app/ke%C3%A7dim/id6793411739"
 PLAY_STORE = "https://play.google.com/store/apps/details?id=az.kecdim"
