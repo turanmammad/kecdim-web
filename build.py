@@ -494,6 +494,51 @@ h3{{color:#1C2321}}p{{margin:0 0 14px}}{RESPONSIVE}</style>
 
 
 
+def inject_related():
+    """Hər bloq yazısının sonuna «Oxşar yazılar» bloku qoyur.
+
+    🔴 Niyə: 03.09 ölçməsi göstərdi ki, bloq səhifələrinin GA4-də baxışı SIFIRDIR.
+    Səbəblərdən biri struktur idi — hər yazı dalan idi: nə bir-birinə keçid, nə də
+    siyahıya qayıdış vardı. Daxili keçid həm Google-un dərinliyə enməsini, həm də
+    oxucunun ikinci yazıya keçməsini asanlaşdırır.
+
+    Blok mövcud səhifələrdən qurulur (başlıq <title>-dan oxunur) — əl ilə siyahı
+    saxlanmır, yəni yeni yazı əlavə olunanda özü qoşulur.
+    """
+    import re as _re
+    pages = sorted(OUT.glob("bloq-*.html"))
+    meta = {}
+    for f in pages:
+        html = f.read_text(encoding="utf-8")
+        m = _re.search(r"<title>(.*?)(?:\s*\|\s*Keçdim)?</title>", html, _re.S)
+        meta[f.name] = (m.group(1).strip() if m else f.stem)
+    names = list(meta)
+    done = 0
+    for i, name in enumerate(names):
+        f = OUT / name
+        html = f.read_text(encoding="utf-8")
+        if "kd-related" in html:                      # təkrar qoşma
+            html = _re.sub(r'<section class="kd-related".*?</section>', "", html, flags=_re.S)
+        picks = [names[(i + k) % len(names)] for k in (1, 2, 3)][: max(0, min(3, len(names) - 1))]
+        if not picks:
+            continue
+        cards = "".join(
+            f'<a href="/{n}" style="display:block;padding:14px 16px;border:1px solid #E4E8E2;'
+            f'border-radius:14px;background:#FFF;color:#1C2321;font:600 14px Inter,sans-serif;'
+            f'line-height:1.45">{meta[n]}</a>' for n in picks)
+        block = (
+            '<section class="kd-related" style="max-width:760px;margin:8px auto 40px;padding:0 20px">'
+            '<div style="font:700 15px Manrope,sans-serif;margin:0 0 12px">Oxşar yazılar</div>'
+            f'<div style="display:grid;gap:10px">{cards}</div>'
+            '<div style="margin-top:14px;font:500 13px Inter,sans-serif">'
+            '<a href="/bloq.html">← Bütün yazılar</a> · <a href="/#yukle">Keçdim-i yüklə</a></div>'
+            '</section>')
+        html = html.replace("</body>", block + "\n</body>")
+        f.write_text(html, encoding="utf-8")
+        done += 1
+    return done
+
+
 def inject_index_cards():
     """Yeni yazıları bloq siyahısına əlavə et — yetim səhifə qalmasın.
     Markup mövcud kartlardan hərfi kopyalanır (yalnız məzmun dəyişir)."""
@@ -577,6 +622,7 @@ def main() -> None:
     written += build_new_posts()
     n = inject_index_cards()
     inject_ga_static()
+    rel = inject_related()
 
     # sitemap + robots
     urls = [SITE + "/"] + [
@@ -593,6 +639,7 @@ def main() -> None:
     print(f"   ↳ {n} yeni yazı bloq siyahısına əlavə edildi")
     print(f"✅ {len(written)} səhifə quruldu: {', '.join(written)}")
     print(f"   + sitemap.xml ({len(urls)} URL) + robots.txt")
+    print(f"   + «Oxşar yazılar» bloku: {rel} səhifə")
 
 
 if __name__ == "__main__":
