@@ -231,7 +231,10 @@ def convert(src_name: str) -> str:
         ga = (f'<script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>'
               '<script>window.dataLayer=window.dataLayer||[];'
               'function gtag(){dataLayer.push(arguments)}gtag("js",new Date());'
-              f'gtag("config","{GA_ID}",{{"anonymize_ip":true,"allow_google_signals":false}});</script>')
+              f'gtag("config","{GA_ID}",{{"anonymize_ip":true,"allow_google_signals":false}});</script>'
+              # App-a keçid ölçülür: bloq → «Yüklə» və ya mağaza linki.
+              # Bunsuz «CTR → APP» sütunu heç vaxt real ola bilməz.
+              '<script>document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a");if(!a)return;var h=a.getAttribute("href")||"";if(/apps\\.apple\\.com|play\\.google\\.com/.test(h)||/#yukle$/.test(h)){if(window.gtag)gtag("event","app_click",{page_path:location.pathname,link_url:h});}},true);</script>')
 
     head = f"""<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -456,7 +459,10 @@ def build_new_posts():
             ga_tag = (f'<script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>'
                       '<script>window.dataLayer=window.dataLayer||[];'
                       'function gtag(){dataLayer.push(arguments)}gtag("js",new Date());'
-                      f'gtag("config","{GA_ID}",{{"anonymize_ip":true,"allow_google_signals":false}});</script>')
+                      f'gtag("config","{GA_ID}",{{"anonymize_ip":true,"allow_google_signals":false}});</script>'
+              # App-a keçid ölçülür: bloq → «Yüklə» və ya mağaza linki.
+              # Bunsuz «CTR → APP» sütunu heç vaxt real ola bilməz.
+              '<script>document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a");if(!a)return;var h=a.getAttribute("href")||"";if(/apps\\.apple\\.com|play\\.google\\.com/.test(h)||/#yukle$/.test(h)){if(window.gtag)gtag("event","app_click",{page_path:location.pathname,link_url:h});}},true);</script>')
         head = f"""<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{post['title']} | Keçdim</title>
