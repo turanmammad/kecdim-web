@@ -249,7 +249,12 @@ def convert(src_name: str) -> str:
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{canonical}">
+<meta property="og:image" content="https://kecdim.pro-tech.az/og-image.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="500">
+<meta property="og:image:alt" content="Keçdim — imtahan hazırlığı tətbiqi">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://kecdim.pro-tech.az/og-image.png">
 {helmet}
 <style>{RESPONSIVE}</style>
 {ga}
@@ -476,7 +481,12 @@ def build_new_posts():
 <meta property="og:title" content="{post['title']}">
 <meta property="og:description" content="{post['desc']}">
 <meta property="og:url" content="{canonical}">
+<meta property="og:image" content="https://kecdim.pro-tech.az/og-image.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="500">
+<meta property="og:image:alt" content="Keçdim — imtahan hazırlığı tətbiqi">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://kecdim.pro-tech.az/og-image.png">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600&family=Archivo:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>body{{margin:0;background:#FAFAF7;font-family:Inter,system-ui,sans-serif;color:#1C2321}}
 a{{color:#16A34A;text-decoration:none}}a:hover{{color:#15803D}}html{{scroll-behavior:smooth}}
