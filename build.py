@@ -633,6 +633,12 @@ def main() -> None:
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
           + "".join(f"  <url><loc>{u}</loc></url>\n" for u in urls) + "</urlset>\n")
     (OUT / "sitemap.xml").write_text(sm, encoding="utf-8")
+    # IndexNow açarı — Bing/Yandex-ə yeni URL-ləri dərhal bildirmək üçün.
+    # 🔴 Google IndexNow-u DƏSTƏKLƏMİR (onun sitemap ping-i də 2023-də ləğv olundu),
+    # ona görə Google tərəfi Search Console ilə gedir.
+    INDEXNOW_KEY = "b94b7b1f07f2d56218179b68ae0496ad"
+    (OUT / f"{INDEXNOW_KEY}.txt").write_text(INDEXNOW_KEY, encoding="utf-8")
+
     (OUT / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
 
