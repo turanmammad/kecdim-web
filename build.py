@@ -138,6 +138,20 @@ a:focus-visible{outline:3px solid #16A34A;outline-offset:3px;border-radius:6px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 """
 
+# ── Google Search Console doğrulaması ────────────────────────────────────────
+# 🔴 KÖK SƏBƏB (03.09.2026): `kecdim.pro-tech.az` **GitHub Pages**-dən verilir
+# (`server: GitHub.com`), Cloudflare bu host üçün yalnız DNS-dir (proxy=False).
+# Yəni doğrulama faylını Cloudflare-ə qoymaq HEÇ NƏ etmir — Google onu
+# `https://kecdim.pro-tech.az/...` ünvanında axtarır, oranı isə bu repo verir.
+#
+# İki üsuldan birini doldur, `build.py` hər ikisini avtomatik yerləşdirir və
+# rebuild-də İTMİR (IndexNow açarı ilə eyni məntiq):
+#   · GOOGLE_VERIFY_META — «HTML teqi» üsulundakı `content="..."` dəyəri
+#   · GOOGLE_VERIFY_FILE — «HTML faylı» üsulundakı `googleXXXX.html` adı
+# Boş qalsa heç nə əlavə olunmur.
+GOOGLE_VERIFY_META = ""
+GOOGLE_VERIFY_FILE = ""
+
 FAVICON = (
     '<link rel="icon" href="data:image/svg+xml,'
     "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E"
@@ -249,7 +263,7 @@ def convert(src_name: str) -> str:
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{canonical}">
-<meta property="og:image" content="https://kecdim.pro-tech.az/og-image.png">
+{_gverify()}<meta property="og:image" content="https://kecdim.pro-tech.az/og-image.png">
 <meta property="og:image:width" content="1024">
 <meta property="og:image:height" content="500">
 <meta property="og:image:alt" content="Keçdim — imtahan hazırlığı tətbiqi">
@@ -481,7 +495,7 @@ def build_new_posts():
 <meta property="og:title" content="{post['title']}">
 <meta property="og:description" content="{post['desc']}">
 <meta property="og:url" content="{canonical}">
-<meta property="og:image" content="https://kecdim.pro-tech.az/og-image.png">
+{_gverify()}<meta property="og:image" content="https://kecdim.pro-tech.az/og-image.png">
 <meta property="og:image:width" content="1024">
 <meta property="og:image:height" content="500">
 <meta property="og:image:alt" content="Keçdim — imtahan hazırlığı tətbiqi">
@@ -620,6 +634,13 @@ def inject_ga_static():
     return n
 
 
+def _gverify() -> str:
+    """GSC meta teqi — token yoxdursa boş sətir (heç nə əlavə olunmur)."""
+    if not GOOGLE_VERIFY_META:
+        return ""
+    return f'<meta name="google-site-verification" content="{GOOGLE_VERIFY_META}">\n'
+
+
 def main() -> None:
     written = []
     for src in PAGES:
@@ -648,6 +669,12 @@ def main() -> None:
     # ona görə Google tərəfi Search Console ilə gedir.
     INDEXNOW_KEY = "b94b7b1f07f2d56218179b68ae0496ad"
     (OUT / f"{INDEXNOW_KEY}.txt").write_text(INDEXNOW_KEY, encoding="utf-8")
+
+    # Google «HTML faylı» üsulu — məzmun faylın öz adından ibarətdir.
+    if GOOGLE_VERIFY_FILE:
+        (OUT / GOOGLE_VERIFY_FILE).write_text(
+            f"google-site-verification: {GOOGLE_VERIFY_FILE}\n", encoding="utf-8")
+        print(f"   + GSC doğrulama faylı: {GOOGLE_VERIFY_FILE}")
 
     (OUT / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
