@@ -22,6 +22,7 @@ düzəlişlər növbəti ixracda itərdi. Bu skript hər dəfə eyni qaydaları 
 """
 import html
 import re
+import datetime as dt
 import shutil
 from pathlib import Path
 
@@ -660,9 +661,22 @@ def main() -> None:
         SITE + "/" + p[0] for p in PAGES.values() if p[0] != "index.html"
     ] + [SITE + f"/bloq-{p['slug']}.html" for p in NEW_POSTS] \
       + [SITE + "/privacy.html", SITE + "/support.html", SITE + "/terms.html"]
+    # 🔴 `lastmod` əlavə olundu (04.09.2026): sitemap yalnız `<loc>` verirdi.
+    # URL Inspection göstərdi ki, 12 bloq səhifəsinin heç biri taranmayıb
+    # («URL Google-a məlum deyil»), ana səhifə isə 22 Avqustdan bəri
+    # yenidən taranmayıb — yəni ondan sonra əlavə olunan bloq kartlarını
+    # Google hələ görməyib. `lastmod` tarama prioritetini artırır.
+    # Tarix faylın ÖZ dəyişmə vaxtındandır — uydurulmur.
+    def _lastmod(u: str) -> str:
+        f = OUT / u.rsplit("/", 1)[-1]
+        if not f.exists():
+            f = OUT / "index.html"
+        return dt.datetime.fromtimestamp(f.stat().st_mtime, dt.timezone.utc).date().isoformat()
+
     sm = ('<?xml version="1.0" encoding="UTF-8"?>\n'
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-          + "".join(f"  <url><loc>{u}</loc></url>\n" for u in urls) + "</urlset>\n")
+          + "".join(f"  <url><loc>{u}</loc><lastmod>{_lastmod(u)}</lastmod></url>\n" for u in urls)
+          + "</urlset>\n")
     (OUT / "sitemap.xml").write_text(sm, encoding="utf-8")
     # IndexNow açarı — Bing/Yandex-ə yeni URL-ləri dərhal bildirmək üçün.
     # 🔴 Google IndexNow-u DƏSTƏKLƏMİR (onun sitemap ping-i də 2023-də ləğv olundu),
