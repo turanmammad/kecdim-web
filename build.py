@@ -608,6 +608,57 @@ def inject_index_cards():
 
 
 
+def fix_pricing():
+    """🔴 Dizayn maketindəki qiymətlər SAXTA idi (08.09.2026).
+
+    Landing-in `#qiymet` bölməsi dizayndan olduğu kimi gəlir, dizaynda isə
+    uydurma rəqəm və vədlər var idi: aylıq 6.99 ₼ (real 5.99), illik 29.99 ₼
+    (real 35.99), «AI izahlar» (belə funksiya yoxdur), «4 imtahan» (əslində 6),
+    «3 gün pulsuz» (trial yoxdur). Admin panelindəki 20 saxta rəqəmlə eyni sinif.
+
+    Həqiqət mənbəyi — canlı `plus_plans` cədvəli və `app_config.plus_features` /
+    `free_features`. Qiymət dəyişəndə AŞAĞIDAKI cütləri yenilə; mənbə dizayn
+    yenidən ixrac olunsa da bu funksiya düzəlişi təkrar tətbiq edir.
+
+    🔑 Hər əvəzləmə yoxlanır: gözlənilən mətn tapılmasa xəbərdarlıq verilir —
+    səssiz «heç nə etmədim» halı olmasın.
+    """
+    f = OUT / "index.html"
+    if not f.exists():
+        return 0
+    t = f.read_text(encoding="utf-8")
+    pairs = [
+        # (dizayndakı saxta mətn, real dəyər)
+        ("<span>Aylıq</span><b style=\"font-family:Manrope\">6.99 ₼</b>",
+         "<span>1 ay</span><b style=\"font-family:Manrope\">5.99 ₼</b>"),
+        ("<span>İllik</span><b style=\"font-family:Manrope\">29.99 ₼</b>",
+         "<span>1 il</span><b style=\"font-family:Manrope\">35.99 ₼</b>"),
+        ("<span>✓ Limitsiz sual və sınaq</span><span>✓ AI izahlar + təhlil</span>"
+         "<span>✓ Fərdi plan + 4 imtahan</span><span>✓ Reklamsız · 3 gün pulsuz</span>",
+         "<span>✓ Bütün 6 imtahanda limitsiz tam sınaq</span>"
+         "<span>✓ Bölmə üzrə detallı hesabat — hansı mövzuda zəifsən</span>"
+         "<span>✓ Sınaq tarixçəsinin tam arxivi</span>"
+         "<span>✓ Reklamsız və offline istifadə</span>"),
+        ("<span>✓ Gündəlik sual limiti</span><span>✓ 1 sınaq imtahanı / gün</span>"
+         "<span>✓ Əsas statistika</span><span>✓ Qeydiyyatsız istifadə</span>",
+         "<span>✓ Səhvlərin təkrarı — həmişə limitsiz</span>"
+         "<span>✓ Gündəlik pulsuz sual limiti</span>"
+         "<span>✓ İmtahan təqvimi və xatırlatmalar</span>"
+         "<span>✓ Yol nişanları kataloqu</span>"),
+        # «Pulsuz sına» ölü düymə idi: trial yoxdur, satınalma bağlıdır.
+        (">Pulsuz sına</a>", ">Tətbiqi yüklə</a>"),
+    ]
+    n = 0
+    for old, new in pairs:
+        if old in t:
+            t = t.replace(old, new)
+            n += 1
+        elif new not in t:
+            print(f"   ⚠️  qiymət blokunda gözlənilən mətn tapılmadı: {old[:60]}…")
+    f.write_text(t, encoding="utf-8")
+    return n
+
+
 def inject_ga_static():
     """privacy/support/terms/confirmed əl ilə yazılmış statik fayllardır —
     onlar həm də ÇIXIŞ faylıdır, ona görə injektor iki tərəfli olmalıdır:
@@ -620,7 +671,7 @@ def inject_ga_static():
                'function gtag(){dataLayer.push(arguments)}gtag("js",new Date());'
                f'gtag("config","{GA_ID}",{{"anonymize_ip":true,"allow_google_signals":false}});</script>\n')
     n = 0
-    for name in ("privacy.html", "support.html", "terms.html", "confirmed.html"):
+    for name in ("privacy.html", "support.html", "terms.html", "odenis.html", "odenis-netice.html", "confirmed.html"):
         f = OUT / name
         if not f.exists():
             continue
@@ -654,13 +705,15 @@ def main() -> None:
     written += build_new_posts()
     n = inject_index_cards()
     inject_ga_static()
+    px = fix_pricing()
     rel = inject_related()
 
     # sitemap + robots
     urls = [SITE + "/"] + [
         SITE + "/" + p[0] for p in PAGES.values() if p[0] != "index.html"
     ] + [SITE + f"/bloq-{p['slug']}.html" for p in NEW_POSTS] \
-      + [SITE + "/privacy.html", SITE + "/support.html", SITE + "/terms.html"]
+      + [SITE + "/privacy.html", SITE + "/support.html", SITE + "/terms.html",
+         SITE + "/odenis.html"]
     # 🔴 `lastmod` əlavə olundu (04.09.2026): sitemap yalnız `<loc>` verirdi.
     # URL Inspection göstərdi ki, 12 bloq səhifəsinin heç biri taranmayıb
     # («URL Google-a məlum deyil»), ana səhifə isə 22 Avqustdan bəri
@@ -697,6 +750,7 @@ def main() -> None:
     print(f"✅ {len(written)} səhifə quruldu: {', '.join(written)}")
     print(f"   + sitemap.xml ({len(urls)} URL) + robots.txt")
     print(f"   + «Oxşar yazılar» bloku: {rel} səhifə")
+    print(f"   + qiymət bloku real dəyərlərə çevrildi: {px} əvəzləmə")
 
 
 if __name__ == "__main__":
