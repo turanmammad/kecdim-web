@@ -671,7 +671,7 @@ def inject_ga_static():
                'function gtag(){dataLayer.push(arguments)}gtag("js",new Date());'
                f'gtag("config","{GA_ID}",{{"anonymize_ip":true,"allow_google_signals":false}});</script>\n')
     n = 0
-    for name in ("privacy.html", "support.html", "terms.html", "odenis.html", "odenis-netice.html", "confirmed.html"):
+    for name in ("privacy.html", "support.html", "terms.html", "odenis.html", "odenis-netice.html", "plus.html", "confirmed.html"):
         f = OUT / name
         if not f.exists():
             continue

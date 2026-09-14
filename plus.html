@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keçdim+ — abunə al</title>
+<meta name="description" content="Keçdim+ abunəliyini bank kartı ilə al. Qiymətlər manatla, ödəniş Kapital Bank üzərindən.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://kecdim.pro-tech.az/plus.html">
+<style>
+  :root { --g:#16A34A; --ink:#1C2321; --muted:#6B7671; --bg:#FAFAF7; --line:rgba(28,35,33,.10); }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); line-height:1.6;
+         font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width:680px; margin:0 auto; padding:30px 20px 80px; }
+  header { display:flex; align-items:center; gap:12px; }
+  .logo { width:40px; height:40px; border-radius:11px; background:var(--g); display:flex;
+          align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:20px; }
+  h1 { font-size:26px; margin:22px 0 6px; }
+  .lead { color:var(--muted); margin:0 0 22px; }
+  .step { background:#fff; border:1px solid var(--line); border-radius:16px; padding:20px; margin-top:16px; }
+  .step h2 { font-size:15px; margin:0 0 14px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+  .plans { display:grid; gap:10px; }
+  .plan { display:flex; align-items:center; gap:12px; border:1.5px solid var(--line);
+          border-radius:12px; padding:14px 16px; cursor:pointer; background:#fff; }
+  .plan.sel { border-color:var(--g); background:#F0FDF4; }
+  .plan input { accent-color:var(--g); width:18px; height:18px; }
+  .plan .t { flex:1; font-weight:600; }
+  .plan .badge { font-size:12px; color:var(--g); background:#DCFCE7; padding:2px 8px; border-radius:99px; }
+  .plan .p { font-weight:800; white-space:nowrap; }
+  input[type=email], input[type=text] { width:100%; height:48px; padding:0 14px; font-size:16px;
+          border:1.5px solid var(--line); border-radius:12px; background:#fff; color:var(--ink); }
+  button { width:100%; height:50px; border:0; border-radius:12px; background:var(--g); color:#fff;
+           font-weight:700; font-size:16px; cursor:pointer; margin-top:12px; }
+  button[disabled] { opacity:.5; cursor:default; }
+  button.ghost { background:#fff; color:var(--ink); border:1.5px solid var(--line); font-weight:600; }
+  .msg { margin-top:12px; padding:12px 14px; border-radius:11px; font-size:14px; display:none; }
+  .msg.err { background:#FEF2F2; color:#991B1B; display:block; }
+  .msg.ok  { background:#F0FDF4; color:#166534; display:block; }
+  .msg.info{ background:#F3F5F3; color:#3C453F; display:block; }
+  .who { font-size:14px; color:var(--muted); }
+  .who b { color:var(--ink); }
+  ul.feat { margin:0; padding-left:18px; color:#3C453F; font-size:15px; }
+  .fine { color:var(--muted); font-size:13px; margin-top:20px; }
+  a { color:var(--g); }
+  .hide { display:none !important; }
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FXBNW1V7D0"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","G-FXBNW1V7D0",{"anonymize_ip":true,"allow_google_signals":false});</script>
+</head>
+<body>
+<div class="wrap">
+  <header><div class="logo">K</div><strong>Keçdim</strong></header>
+  <h1>Keçdim+ abunəliyi</h1>
+  <p class="lead">Qiymətlər manatladır. Ödəniş Kapital Bank-ın təhlükəsiz səhifəsində aparılır — kart məlumatların bizə çatmır.</p>
+
+  <div class="step">
+    <h2>1 · Paket</h2>
+    <div class="plans" id="plans"><div class="who">Yüklənir…</div></div>
+    <ul class="feat" id="feat" style="margin-top:16px"></ul>
+  </div>
+
+  <div class="step" id="s-auth">
+    <h2>2 · Hesab</h2>
+    <div id="auth-out">
+      <p class="who" style="margin-top:0">Tətbiqdə istifadə etdiyin <b>e-poçt</b> ilə gir — abunə məhz o hesaba yazılacaq.</p>
+      <input type="email" id="email" placeholder="ornek@mail.com" autocomplete="email" inputmode="email">
+      <button id="btn-code">Kod göndər</button>
+      <div id="otp" class="hide" style="margin-top:12px">
+        <input type="text" id="code" placeholder="6 rəqəmli kod" inputmode="numeric" maxlength="6" autocomplete="one-time-code">
+        <button id="btn-verify">Təsdiqlə</button>
+      </div>
+      <div class="msg" id="auth-msg"></div>
+    </div>
+    <div id="auth-in" class="hide">
+      <p class="who" style="margin-top:0">Giriş edilib: <b id="me"></b></p>
+      <div class="msg info" id="sub-state"></div>
+      <button class="ghost" id="btn-out">Çıx</button>
+    </div>
+  </div>
+
+  <div class="step" id="s-pay">
+    <h2>3 · Ödəniş</h2>
+    <button id="btn-pay" disabled>Ödənişə keç</button>
+    <div class="msg" id="pay-msg"></div>
+    <p class="fine">Davam etməklə <a href="/odenis.html">abunə və ödəniş şərtləri</a> ilə razılaşırsan.
+       Abunə avtomatik yenilənmir — müddət bitəndə özün uzadırsan.</p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+(function () {
+  var URL_ = 'https://upamgtjretcubklievpe.supabase.co';
+  var KEY_ = 'sb_publishable_KlKUM3IMUciK5asCbXxT7A_ozAKePho';
+  var sb = window.supabase.createClient(URL_, KEY_, { auth: { persistSession: true, storageKey: 'kecdim-web' } });
+
+  var $ = function (id) { return document.getElementById(id); };
+  var plans = [], chosen = null, session = null;
+
+  function msg(el, text, kind) { var e = $(el); e.className = 'msg ' + kind; e.textContent = text; }
+  function clear(el) { var e = $(el); e.className = 'msg'; e.textContent = ''; }
+
+  // ---- 1. Paketlər (qiymət SAYTA yazılmır — canlı cədvəldən gəlir) ----
+  async function loadPlans() {
+    var r = await sb.from('plus_plans').select('code,title,months,price_azn,badge')
+                    .eq('is_active', true).order('sort_order');
+    if (r.error || !r.data || !r.data.length) {
+      $('plans').innerHTML = '<div class="msg err">Paketlər yüklənmədi. Səhifəni yenilə.</div>';
+      return;
+    }
+    plans = r.data;
+    chosen = plans.find(function (p) { return p.badge; }) || plans[0];
+    render();
+    var c = await sb.from('app_config').select('key,value')
+                    .in('key', ['plus_features', 'plus_web_purchase_enabled']);
+    var cfg = {};
+    (c.data || []).forEach(function (x) { cfg[x.key] = x.value; });
+    (cfg.plus_features || []).forEach(function (f) {
+      var li = document.createElement('li'); li.textContent = f; $('feat').appendChild(li);
+    });
+    if (cfg.plus_web_purchase_enabled !== true) {
+      msg('pay-msg', 'Satınalma müvəqqəti bağlıdır. Bir azdan yenidən yoxla.', 'info');
+      $('btn-pay').disabled = true;
+      $('s-pay').dataset.off = '1';
+    }
+  }
+
+  function render() {
+    $('plans').innerHTML = '';
+    plans.forEach(function (p) {
+      var d = document.createElement('label');
+      d.className = 'plan' + (chosen && p.code === chosen.code ? ' sel' : '');
+      d.innerHTML = '<input type="radio" name="plan"' + (chosen && p.code === chosen.code ? ' checked' : '') + '>' +
+                    '<span class="t">' + p.title + '</span>' +
+                    (p.badge ? '<span class="badge">' + p.badge + '</span>' : '') +
+                    '<span class="p">' + Number(p.price_azn).toFixed(2) + ' ₼</span>';
+      d.onclick = function () { chosen = p; render(); syncPay(); };
+      $('plans').appendChild(d);
+    });
+  }
+
+  // ---- 2. Hesab ----
+  // 🔴 `shouldCreateUser: false` QƏSDƏNDİR. Keçdim istifadəçilərinin böyük hissəsi
+  //    tətbiqdə ANONİMDİR. Sayt yeni hesab açsaydı, adam ödəyəcək, Plus yeni hesaba
+  //    yazılacaq, tətbiqdəki profilində isə heç nə dəyişməyəcəkdi.
+  async function sendCode() {
+    var email = ($('email').value || '').trim().toLowerCase();
+    if (!email) { msg('auth-msg', 'E-poçtunu yaz.', 'err'); return; }
+    $('btn-code').disabled = true; clear('auth-msg');
+    var r = await sb.auth.signInWithOtp({ email: email, options: { shouldCreateUser: false } });
+    $('btn-code').disabled = false;
+    if (r.error) {
+      var m = (r.error.message || '').toLowerCase();
+      if (m.indexOf('signups not allowed') >= 0 || m.indexOf('not found') >= 0 || r.error.status === 422) {
+        msg('auth-msg', 'Bu e-poçtla hesab tapılmadı. Tətbiqi aç → Profil → hesabına e-poçt bağla, ' +
+                        'sonra bura qayıt. Beləcə abunə məhz tətbiqdəki profilinə yazılır.', 'err');
+      } else {
+        msg('auth-msg', 'Kod göndərilmədi: ' + r.error.message, 'err');
+      }
+      return;
+    }
+    $('otp').classList.remove('hide');
+    msg('auth-msg', 'Kod ' + email + ' ünvanına göndərildi.', 'ok');
+  }
+
+  async function verifyCode() {
+    var email = ($('email').value || '').trim().toLowerCase();
+    var token = ($('code').value || '').trim();
+    if (token.length < 6) { msg('auth-msg', 'Kod 6 rəqəmdir.', 'err'); return; }
+    $('btn-verify').disabled = true;
+    var r = await sb.auth.verifyOtp({ email: email, token: token, type: 'email' });
+    $('btn-verify').disabled = false;
+    if (r.error) { msg('auth-msg', 'Kod düz gəlmədi: ' + r.error.message, 'err'); return; }
+    await refreshSession();
+  }
+
+  async function refreshSession() {
+    var s = await sb.auth.getSession();
+    session = s.data.session;
+    if (!session) {
+      $('auth-in').classList.add('hide'); $('auth-out').classList.remove('hide');
+    } else {
+      $('auth-out').classList.add('hide'); $('auth-in').classList.remove('hide');
+      $('me').textContent = session.user.email || '—';
+      var sub = await sb.from('subscriptions').select('status,expires_at').maybeSingle();
+      if (sub.data && sub.data.status === 'active' && sub.data.expires_at) {
+        var d = new Date(sub.data.expires_at);
+        $('sub-state').textContent = 'Keçdim+ artıq aktivdir — ' +
+          d.toLocaleDateString('az-AZ', { day: 'numeric', month: 'long', year: 'numeric' }) +
+          ' tarixinə qədər. Yeni ödəniş müddətin üstünə əlavə olunur.';
+      } else {
+        $('sub-state').textContent = 'Hazırda pulsuz paketdəsən.';
+      }
+    }
+    syncPay();
+  }
+
+  function syncPay() {
+    $('btn-pay').disabled = !(session && chosen) || $('s-pay').dataset.off === '1';
+    if (session && chosen) {
+      $('btn-pay').textContent = 'Ödənişə keç · ' + Number(chosen.price_azn).toFixed(2) + ' ₼';
+    } else {
+      $('btn-pay').textContent = 'Ödənişə keç';
+    }
+  }
+
+  // ---- 3. Ödəniş ----
+  async function pay() {
+    if (!session || !chosen) return;
+    $('btn-pay').disabled = true; msg('pay-msg', 'Bank səhifəsi hazırlanır…', 'info');
+    try {
+      var res = await fetch(URL_ + '/functions/v1/kapital-pay/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + session.access_token },
+        body: JSON.stringify({ plan: chosen.code })
+      });
+      var d = await res.json();
+      if (!res.ok || !d.checkout_url) {
+        var t = {
+          purchase_disabled: 'Satınalma müvəqqəti bağlıdır.',
+          test_mode_restricted: 'Sistem hazırda sınaq rejimindədir — satınalma hələ açılmayıb.',
+          account_required: 'Ödəniş üçün hesabına e-poçt bağlı olmalıdır.',
+          bank_unavailable: 'Bankla əlaqə alınmadı. Bir azdan yenidən sına.',
+          too_many_pending: 'Çox sayda yarımçıq sifariş var. 15 dəqiqə gözlə.'
+        }[d.error] || ('Ödəniş başlamadı: ' + (d.error || res.status));
+        msg('pay-msg', t, 'err'); $('btn-pay').disabled = false; return;
+      }
+      gtag && gtag('event', 'begin_checkout', { value: Number(chosen.price_azn), currency: 'AZN', items: [chosen.code] });
+      window.location.href = d.checkout_url;
+    } catch (e) {
+      msg('pay-msg', 'Şəbəkə xətası. İnternet bağlantını yoxla.', 'err');
+      $('btn-pay').disabled = false;
+    }
+  }
+
+  $('btn-code').onclick = sendCode;
+  $('btn-verify').onclick = verifyCode;
+  $('btn-pay').onclick = pay;
+  $('btn-out').onclick = async function () { await sb.auth.signOut(); await refreshSession(); };
+
+  loadPlans().then(refreshSession);
+})();
+</script>
+</body>
+</html>
