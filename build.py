@@ -50,6 +50,47 @@ GA_ID = "G-FXBNW1V7D0"
 APP_STORE = "https://apps.apple.com/az/app/ke%C3%A7dim/id6793411739"
 PLAY_STORE = "https://play.google.com/store/apps/details?id=az.kecdim"
 
+# ── Kampaniya izlənməsi (UTM) ───────────────────────────────────────────────
+# 🔴 Niyə lazımdır: Play Console-un `store_performance_*_traffic_source.csv`
+# hesabatında saytdan gələn BÜTÜN trafik «Other / No UTM source specified»
+# kimi görünürdü — yəni saytın Play-ə neçə adam göndərdiyi ÖLÇÜLƏ BİLMİRDİ.
+#
+# Play: install referrer standartı — `&referrer=<utm sətri, URL-kodlanmış>`.
+#       Dəyər Play Console hesabatında «UTM source / UTM campaign» sütunlarına düşür.
+# Apple: App Analytics kampaniya linki — `?pt=<provider token>&ct=<kampaniya>&mt=8`.
+#       🔴 `ct` TƏK BAŞINA işləmir, Apple `pt`-siz kampaniyanı qeydə almır.
+#       `pt` yalnız App Store Connect UI-dan alınır (API-də YOXDUR):
+#       ASC → Analytics → Acquisition → Campaigns → «Create Campaign Link» →
+#       yaranan URL-dəki `pt=` rəqəmi. Onu aşağıya yazanda linklər avtomatik tamamlanır.
+#       Boş qaldıqda `ct` yenə əlavə olunur (zərərsizdir, link işləyir) və Apple
+#       tərəfdə ölçmə «Web Referrers → kecdim.pro-tech.az» sətri ilə qalır.
+ASC_PROVIDER_TOKEN = ""          # məs. "123456789" — ASC UI-dan
+UTM_SOURCE = "kecdim_site"
+UTM_MEDIUM = "badge"
+
+
+def store_url(store: str, campaign: str) -> str:
+    """Mağaza linkini kampaniya parametrləri ilə qur.
+
+    store: "apple" | "play" · campaign: məs. "site_hero"
+    """
+    from urllib.parse import quote
+    if store == "play":
+        ref = quote(f"utm_source={UTM_SOURCE}&utm_medium={UTM_MEDIUM}"
+                    f"&utm_campaign={campaign}", safe="")
+        return f"{PLAY_STORE}&referrer={ref}"
+    parts = []
+    if ASC_PROVIDER_TOKEN:
+        parts.append(f"pt={ASC_PROVIDER_TOKEN}")
+    parts.append(f"ct={campaign}")
+    # 🔴 `mt=8` QƏSDƏN yoxdur: Apple onu 301 ilə atır (ölçüldü 14.09.2026) —
+    # hər klikə artıq bir yönləndirmə əlavə edərdi. `ct` isə son URL-də qalır.
+    return f"{APP_STORE}?" + "&".join(parts)
+
+
+# Səhifədəki yerinə görə kampaniya adı: birinci cüt = hero, ikinci = aşağı CTA.
+STORE_CAMPAIGNS = ["site_hero", "site_cta"]
+
 # ── səhifə xəritəsi: mənbə → (çıxış, başlıq, təsvir, növ) ───────────────────
 PAGES = {
     "Keçdim Landing.dc.html": (
@@ -205,13 +246,23 @@ def convert(src_name: str) -> str:
         '<path fill="#34A853" d="M59.3 459.6l161.1-193.4 89.4 85.8z"/></svg>')
 
     # 3) 🔴 mağaza düymələri: dizaynda hamısı «#elaqe»yə gedirdi
+    # Kampaniya adı görünmə sırasına görə verilir (hero → cta → ...).
+    _seen = {"apple": 0, "play": 0}
+
+    def _camp(store):
+        i = _seen[store]
+        _seen[store] += 1
+        return STORE_CAMPAIGNS[i] if i < len(STORE_CAMPAIGNS) else f"site_{i + 1}"
+
     body = re.sub(
         r'href="#elaqe"((?:(?!</a>).)*?App Store)',
-        lambda mm: f'href="{APP_STORE}" target="_blank" rel="noopener"{mm.group(1)}',
+        lambda mm: f'href="{html.escape(store_url("apple", _camp("apple")), quote=False)}" '
+                   f'target="_blank" rel="noopener"{mm.group(1)}',
         body, flags=re.S)
     body = re.sub(
         r'href="#elaqe"((?:(?!</a>).)*?Google Play)',
-        lambda mm: f'href="{PLAY_STORE}" target="_blank" rel="noopener"{mm.group(1)}',
+        lambda mm: f'href="{html.escape(store_url("play", _camp("play")), quote=False)}" '
+                   f'target="_blank" rel="noopener"{mm.group(1)}',
         body, flags=re.S)
 
     canonical = SITE + ("/" if out_name == "index.html" else "/" + out_name)
