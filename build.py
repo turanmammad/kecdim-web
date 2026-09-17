@@ -698,6 +698,18 @@ def fix_pricing():
          "<span>✓ Yol nişanları kataloqu</span>"),
         # «Pulsuz sına» ölü düymə idi: trial yoxdur, satınalma bağlıdır.
         (">Pulsuz sına</a>", ">Tətbiqi yüklə</a>"),
+        # 17.09.2026: Kapital Bank production terminalı açıldı — «Satınalma hazırlanır»
+        # bloku satış blokuna çevrildi (saytdan kartla alış, /plus.html).
+        ("<div style=\"font:600 14px Inter;color:#1C2321\">Satınalma hazırlanır</div>\n"
+         "<div style=\"font:400 13px/1.7 Inter;color:#6B7671;margin-top:6px\">Keçdim+ abunəliyi hələ satışa açılmayıb — "
+         "bu müddətdə bütün funksiyalar pulsuzdur. Açılandan sonra ödəniş App Store, Google Play və bank kartı "
+         "(Visa / Mastercard) ilə mümkün olacaq. Qiymətlər Azərbaycan manatı (₼) ilədir, ƏDV daxildir.</div>",
+         "<div style=\"font:600 14px Inter;color:#1C2321\">Keçdim+ necə alınır?</div>\n"
+         "<div style=\"font:400 13px/1.7 Inter;color:#6B7671;margin-top:6px\">Abunəlik saytdan bank kartı (Visa / Mastercard) "
+         "ilə alınır — ödəniş Kapital Bank üzərindən keçir. Tətbiqdəki hesabınla daxil ol, paketi seç, ödə: Keçdim+ həmin "
+         "hesabda dərhal açılır. Qiymətlər Azərbaycan manatı (₼) ilədir, ƏDV daxildir.</div>\n"
+         "<a href=\"/plus.html\" style=\"display:inline-flex;align-items:center;justify-content:center;height:44px;"
+         "padding:0 22px;background:#16A34A;border-radius:12px;font:600 14px Inter;color:#FFFFFF;margin-top:14px\">Keçdim+ al</a>"),
     ]
     n = 0
     for old, new in pairs:
