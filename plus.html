@@ -3,9 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Keçdim+ — abunə al</title>
-<meta name="description" content="Keçdim+ abunəliyini bank kartı ilə al. Qiymətlər manatla, ödəniş Kapital Bank üzərindən.">
+<title>Keçdim+ al — limitsiz sınaq və detallı hesabat | Keçdim</title>
+<meta name="description" content="Keçdim+ ilə bütün imtahanlarda limitsiz tam sınaq, bölmə üzrə hesabat və reklamsız istifadə. Bank kartı ilə birdəfəlik ödəniş — avtomatik yenilənmir. 1 ay 5,99 ₼-dan.">
 <link rel="canonical" href="https://kecdim.pro-tech.az/plus.html">
+<meta name="theme-color" content="#16A34A">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2316A34A'/%3E%3Cpath d='M8 17l5 5L24 10' stroke='white' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Keçdim">
+<meta property="og:locale" content="az_AZ">
+<meta property="og:title" content="Keçdim+ al — limitsiz sınaq və detallı hesabat">
+<meta property="og:description" content="Bütün imtahanlarda limitsiz tam sınaq, bölmə üzrə hesabat, reklamsız. Kartla birdəfəlik ödəniş, avtomatik yenilənmir. Tətbiqdə eyni e-poçtla daxil ol — Keçdim+ avtomatik görünür.">
+<meta property="og:url" content="https://kecdim.pro-tech.az/plus.html">
+<meta property="og:image" content="https://kecdim.pro-tech.az/og-image.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="500">
+<meta property="og:image:alt" content="Keçdim — imtahan hazırlığı tətbiqi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://kecdim.pro-tech.az/og-image.png">
 <style>
   :root { --g:#16A34A; --ink:#1C2321; --muted:#6B7671; --bg:#FAFAF7; --line:rgba(28,35,33,.10); }
   * { box-sizing:border-box; }
@@ -43,26 +57,37 @@
   .fine { color:var(--muted); font-size:13px; margin-top:20px; }
   a { color:var(--g); }
   .hide { display:none !important; }
+  .msg.warn{ background:#FFFBEB; color:#92400E; display:block; }
+  .hint { font-size:13px; color:var(--muted); margin:10px 0 0; }
+  header a { color:var(--ink); text-decoration:none; display:flex; align-items:center; gap:12px; }
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FXBNW1V7D0"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","G-FXBNW1V7D0",{"anonymize_ip":true,"allow_google_signals":false});</script>
 </head>
 <body>
 <div class="wrap">
-  <header><div class="logo">K</div><strong>Keçdim</strong></header>
-  <h1>Keçdim+ abunəliyi</h1>
-  <p class="lead">Qiymətlər manatladır. Ödəniş Kapital Bank-ın təhlükəsiz səhifəsində aparılır — kart məlumatların bizə çatmır.</p>
+  <header><a href="/"><div class="logo">K</div><strong>Keçdim</strong></a></header>
+  <h1>Keçdim+ al</h1>
+  <p class="lead">İmtahana limitsiz hazırlaş: bütün imtahanlarda tam sınaq, zəif mövzularını göstərən hesabat, reklamsız.
+     Kartla <b>birdəfəlik</b> ödəniş — avtomatik yenilənmir, kartından təkrar pul tutulmur.</p>
 
   <div class="step">
     <h2>1 · Paket</h2>
     <div class="plans" id="plans"><div class="who">Yüklənir…</div></div>
-    <ul class="feat" id="feat" style="margin-top:16px"></ul>
+    <ul class="feat" id="feat" style="margin-top:16px">
+      <li>Bütün 6 imtahanda limitsiz tam sınaq</li>
+      <li>Bölmə üzrə detallı hesabat — hansı mövzuda zəifsən</li>
+      <li>Sınaq tarixçəsinin tam arxivi</li>
+      <li>Reklamsız istifadə</li>
+    </ul>
+    <p class="hint">Səhvlərin təkrarı, offline həll və gündəlik pulsuz suallar Keçdim+ olmadan da qalır.</p>
   </div>
 
   <div class="step" id="s-auth">
     <h2>2 · Hesab</h2>
     <div id="auth-out">
-      <p class="who" style="margin-top:0">Tətbiqdə istifadə etdiyin <b>e-poçt</b> ilə gir — abunə məhz o hesaba yazılacaq.</p>
+      <p class="who" style="margin-top:0">E-poçtunu yaz və gələn kodla daxil ol. Bu e-poçtla hesabın yoxdursa, <b>yeni hesab yaranacaq</b>.
+         Sonra <b>tətbiqdə eyni e-poçtla daxil ol — Keçdim+ avtomatik görünəcək.</b></p>
       <input type="email" id="email" placeholder="ornek@mail.com" autocomplete="email" inputmode="email">
       <button id="btn-code">Kod göndər</button>
       <div id="otp" class="hide" style="margin-top:12px">
@@ -70,10 +95,13 @@
         <button id="btn-verify">Təsdiqlə</button>
       </div>
       <div class="msg" id="auth-msg"></div>
+      <p class="hint">Tətbiqdə qonaq kimi nəticələrin var? Onları saxlamaq üçün əvvəl tətbiqdə <b>Profil</b> bölməsindən
+         e-poçtunu hesabına bağla, sonra burada həmin e-poçtu yaz.</p>
     </div>
     <div id="auth-in" class="hide">
       <p class="who" style="margin-top:0">Giriş edilib: <b id="me"></b></p>
       <div class="msg info" id="sub-state"></div>
+      <p class="hint">Tətbiqdə bu e-poçtla daxil ol — Keçdim+ orada avtomatik görünəcək.</p>
       <button class="ghost" id="btn-out">Çıx</button>
     </div>
   </div>
@@ -83,7 +111,9 @@
     <button id="btn-pay" disabled>Ödənişə keç</button>
     <div class="msg" id="pay-msg"></div>
     <p class="fine">Davam etməklə <a href="/odenis.html">abunə və ödəniş şərtləri</a> ilə razılaşırsan.
-       Abunə avtomatik yenilənmir — müddət bitəndə özün uzadırsan.</p>
+       Saytdan alınan paket <b>birdəfəlikdir</b>: avtomatik yenilənmir, müddət bitəndə istəsən yenidən alırsan.
+       Paket bütün imtahanları əhatə edir. Ödəniş Kapital Bank-ın təhlükəsiz səhifəsində aparılır — kart məlumatların bizə çatmır.
+       Qiymətlər manatladır, ƏDV daxildir.</p>
   </div>
 </div>
 
@@ -111,13 +141,12 @@
     plans = r.data;
     chosen = plans.find(function (p) { return p.badge; }) || plans[0];
     render();
+    // Üstünlüklər siyahısı HTML-dədir (03.11.2026): `app_config.plus_features`-də
+    // «offline» Plus üstünlüyü kimi yazılıb, halbuki offline hamı üçündür.
     var c = await sb.from('app_config').select('key,value')
-                    .in('key', ['plus_features', 'plus_web_purchase_enabled']);
+                    .in('key', ['plus_web_purchase_enabled']);
     var cfg = {};
     (c.data || []).forEach(function (x) { cfg[x.key] = x.value; });
-    (cfg.plus_features || []).forEach(function (f) {
-      var li = document.createElement('li'); li.textContent = f; $('feat').appendChild(li);
-    });
     if (cfg.plus_web_purchase_enabled !== true) {
       msg('pay-msg', 'Satınalma müvəqqəti bağlıdır. Bir azdan yenidən yoxla.', 'info');
       $('btn-pay').disabled = true;
@@ -140,27 +169,32 @@
   }
 
   // ---- 2. Hesab ----
-  // 🔴 `shouldCreateUser: false` QƏSDƏNDİR. Keçdim istifadəçilərinin böyük hissəsi
-  //    tətbiqdə ANONİMDİR. Sayt yeni hesab açsaydı, adam ödəyəcək, Plus yeni hesaba
-  //    yazılacaq, tətbiqdəki profilində isə heç nə dəyişməyəcəkdi.
+  // 🔴 03.11.2026: `shouldCreateUser: true`. Əvvəl `false` idi (anonim tətbiq
+  //    istifadəçisi səhvən AYRI hesab açmasın deyə) — nəticədə e-poçtu tətbiqə
+  //    bağlanmamış hər kəs (istifadəçilərin böyük hissəsi anonimdir) saytda heç
+  //    nə ala bilmirdi. İndi hesab yaranır və bu, tətbiqlə uyğundur:
+  //    Plus `subscriptions.user_id`-yə yazılır; tətbiqdə eyni e-poçtla kod girişi
+  //    (`email_auth_screen.dart`: qonaqda `updateUser` → «email exists» → `signInWithOtp`)
+  //    məhz BU user-ə daxil edir, `my_quota` isə `auth.uid()` ilə Plus-u görür.
   async function sendCode() {
     var email = ($('email').value || '').trim().toLowerCase();
     if (!email) { msg('auth-msg', 'E-poçtunu yaz.', 'err'); return; }
     $('btn-code').disabled = true; clear('auth-msg');
-    var r = await sb.auth.signInWithOtp({ email: email, options: { shouldCreateUser: false } });
+    var r = await sb.auth.signInWithOtp({ email: email, options: { shouldCreateUser: true } });
     $('btn-code').disabled = false;
     if (r.error) {
       var m = (r.error.message || '').toLowerCase();
-      if (m.indexOf('signups not allowed') >= 0 || m.indexOf('not found') >= 0 || r.error.status === 422) {
-        msg('auth-msg', 'Bu e-poçtla hesab tapılmadı. Tətbiqi aç → Profil → hesabına e-poçt bağla, ' +
-                        'sonra bura qayıt. Beləcə abunə məhz tətbiqdəki profilinə yazılır.', 'err');
+      if (r.error.status === 429 || m.indexOf('rate') >= 0 || m.indexOf('seconds') >= 0) {
+        msg('auth-msg', 'Kod bir az əvvəl göndərilib. Bir dəqiqə gözlə və yenidən sına.', 'err');
+      } else if (m.indexOf('invalid') >= 0 && m.indexOf('email') >= 0) {
+        msg('auth-msg', 'E-poçt ünvanı düzgün deyil.', 'err');
       } else {
         msg('auth-msg', 'Kod göndərilmədi: ' + r.error.message, 'err');
       }
       return;
     }
     $('otp').classList.remove('hide');
-    msg('auth-msg', 'Kod ' + email + ' ünvanına göndərildi.', 'ok');
+    msg('auth-msg', 'Kod ' + email + ' ünvanına göndərildi. Gəlmirsə spam qovluğuna bax.', 'ok');
   }
 
   async function verifyCode() {
@@ -182,14 +216,21 @@
     } else {
       $('auth-out').classList.add('hide'); $('auth-in').classList.remove('hide');
       $('me').textContent = session.user.email || '—';
-      var sub = await sb.from('subscriptions').select('status,expires_at').maybeSingle();
-      if (sub.data && sub.data.status === 'active' && sub.data.expires_at) {
+      var sub = await sb.from('subscriptions').select('status,expires_at,source').maybeSingle();
+      var st = $('sub-state');
+      st.className = 'msg info';
+      if (sub.data && sub.data.status === 'active' && sub.data.expires_at && new Date(sub.data.expires_at) > new Date()) {
         var d = new Date(sub.data.expires_at);
-        $('sub-state').textContent = 'Keçdim+ artıq aktivdir — ' +
-          d.toLocaleDateString('az-AZ', { day: 'numeric', month: 'long', year: 'numeric' }) +
-          ' tarixinə qədər. Yeni ödəniş müddətin üstünə əlavə olunur.';
+        var until = d.toLocaleDateString('az-AZ', { day: 'numeric', month: 'long', year: 'numeric' });
+        if (sub.data.source === 'apple' || sub.data.source === 'google') {
+          st.className = 'msg warn';
+          st.textContent = 'Keçdim+ bu hesabda ' + (sub.data.source === 'apple' ? 'App Store' : 'Google Play') +
+            ' abunəsi ilə aktivdir (' + until + ' tarixinə qədər). Saytdan əlavə paket almağa ehtiyac yoxdur.';
+        } else {
+          st.textContent = 'Keçdim+ artıq aktivdir — ' + until + ' tarixinə qədər. Yeni paketin müddəti bunun üstünə əlavə olunur.';
+        }
       } else {
-        $('sub-state').textContent = 'Hazırda pulsuz paketdəsən.';
+        st.textContent = 'Hazırda pulsuz paketdəsən.';
       }
     }
     syncPay();

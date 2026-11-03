@@ -1,0 +1,72 @@
+# Keçdim
+
+> Keçdim — Azərbaycanda imtahanlara hazırlıq tətbiqi (iOS və Android). Real formatda sınaq
+> imtahanları, izahlı suallar, səhvlərin təkrarı və imtahan təqvimi. Azərbaycan dilində.
+> Keçdim müstəqil hazırlıq tətbiqidir — DİM, DYP və dövlət qurumları ilə rəsmi əlaqəsi yoxdur.
+> Məhsul sahibi: Protech (PROTECH SOLUTIONS GROUP, MMC), Bakı.
+
+## İmtahanlar (tətbiqdəki sınaq formatı)
+
+- Sürücülük · DYP nəzəri imtahanı — 10 sual, 15 dəqiqə, ən çox 1 səhv
+- Dövlət Qulluğu — 100 sual, 3 saat; qanunvericilik, məntiq, informatika, Azərbaycan dili
+- MİQ (müəllimlərin işə qəbulu) — 60 sual, 150 dəqiqə; ixtisas + tədris metodikası; keçid 40 bal (ixtisas ≥34, metodika ≥6)
+- Müəllim sertifikasiyası — 60 sual, 120 dəqiqə; keçid 30 bal
+- Magistratura — 95 sual, 3 saat 30 dəqiqə; məntiq, informatika, xarici dil (qapalı test sualları)
+- Buraxılış (11-ci sinif) — 56 sual, 3 saat; Azərbaycan dili, xarici dil, riyaziyyat
+
+Sual bazası: 2 300+ izahlı sual. Formatlar Keçdim-də modelləşdirilir; rəsmi qaydalar dəyişə bilər.
+
+## Qiymət
+
+- Pulsuz: tətbiq qeydiyyatsız işləyir, gündəlik pulsuz sual limiti, səhvlərin təkrarı həmişə pulsuz, offline həll.
+- Keçdim+ (saytda bank kartı ilə, birdəfəlik, avtomatik yenilənmir): 1 ay — 5,99 ₼ · 3 ay — 14,99 ₼ · 1 il — 35,99 ₼.
+- Keçdim+ tətbiqdə: App Store / Google Play abunəsi, avtomatik yenilənir; qiymət mağazada göstərilir.
+
+## Əsas səhifələr
+
+- [Ana səhifə](https://kecdim.pro-tech.az/): imtahanlar, xüsusiyyətlər, qiymət
+- [Keçdim+ al](https://kecdim.pro-tech.az/plus.html): saytda kartla birdəfəlik alış
+- [Abunə və ödəniş şərtləri](https://kecdim.pro-tech.az/odenis.html)
+- [İstifadə şərtləri](https://kecdim.pro-tech.az/terms.html)
+- [Məxfilik siyasəti](https://kecdim.pro-tech.az/privacy.html)
+- [Dəstək](https://kecdim.pro-tech.az/support.html)
+- [Bloq](https://kecdim.pro-tech.az/bloq.html)
+
+## Tətbiq
+
+- [App Store](https://apps.apple.com/az/app/ke%C3%A7dim/id6793411739)
+- [Google Play](https://play.google.com/store/apps/details?id=az.kecdim)
+
+## Bloq yazıları
+
+- [İlk dəfədən keçənlərin 5 vərdişi](https://kecdim.pro-tech.az/bloq-5-verdis.html)
+- [Ailənin gözləntisi və imtahan: təzyiqlə necə baş çıxarmaq olar](https://kecdim.pro-tech.az/bloq-ailenin-gozlentisi-ve-imtahan.html)
+- [Aralıqlı təkrar nədir və imtahana hazırlıqda necə işlədilir](https://kecdim.pro-tech.az/bloq-araliqli-tekrar-nedir.html)
+- [11-ci sinif buraxılış imtahanı: 56 sual, 180 dəqiqə üzrə plan](https://kecdim.pro-tech.az/bloq-buraxilis-56-sual-180-deqiqe.html)
+- [Çətin sualda donub qalanda: 3 addımlıq plan](https://kecdim.pro-tech.az/bloq-cetin-sualda-donub-qalanda.html)
+- [Dövlət Qulluğu testi: 100 sualın fənlər üzrə çəkisi və hazırlıq planı](https://kecdim.pro-tech.az/bloq-dq-100-sual-fenlerin-cekisi.html)
+- [AA-dan BB-yə: Dövlət Qulluğu alt-qrupları arasındakı fərq](https://kecdim.pro-tech.az/bloq-dq-alt-qruplar.html)
+- [Dövlət Qulluğu test mərhələsi: 100 sual, 3 saat](https://kecdim.pro-tech.az/bloq-dq-test-merhelesi.html)
+- [DYP imtahanında ən çox səhv edilən 10 sual — və niyə](https://kecdim.pro-tech.az/bloq-dyp-10-sehv.html)
+- [DYP nəzəri imtahanı: 10 sual, 15 dəqiqə, 1 səhv — necə hazırlaşmalı?](https://kecdim.pro-tech.az/bloq-dyp-imtahan-formati-10-sual-15-deqiqe.html)
+- [IELTS Academic nədir: format, vaxt və hazırlıq planı](https://kecdim.pro-tech.az/bloq-ielts-nedir-format-ve-hazirliq.html)
+- [İmtahan günü səhər: stressiz keçirmək üçün rutin](https://kecdim.pro-tech.az/bloq-imtahan-gunu-seher-rutini.html)
+- [İmtahan həyəcanı üçün 1 dəqiqəlik nəfəs məşqi](https://kecdim.pro-tech.az/bloq-imtahan-hecani-nefes-texnikasi.html)
+- [İmtahan stresini azaltmağın 7 praktik yolu](https://kecdim.pro-tech.az/bloq-imtahan-stresi-azaltmaq-7-usul.html)
+- [Magistratura imtahanına hazırlıq: 95 sual, 210 dəqiqə üçün strategiya](https://kecdim.pro-tech.az/bloq-magistratura-95-sual-210-deqiqe.html)
+- [Məntiq bölməsində vaxt itirməmək: 3 sual tipi, 3 taktika](https://kecdim.pro-tech.az/bloq-mentiq-taktika.html)
+- [MİQ-də 60 sual, 150 dəqiqə: vaxtı və balı necə bölmək olar](https://kecdim.pro-tech.az/bloq-miq-60-sual-150-deqiqe.html)
+- [MİQ-də keçid balı: üç şərtin hamısı ödənməlidir](https://kecdim.pro-tech.az/bloq-miq-kecid-bali.html)
+- [Mənfi bal: təxmin etmək nə vaxt sərfəlidir?](https://kecdim.pro-tech.az/bloq-miq-menfi-bal.html)
+- [Metodika sualları: kurikulumun 7 açar anlayışı](https://kecdim.pro-tech.az/bloq-miq-metodika.html)
+- [Səhv dəftəri metodu: eyni səhvi ikinci dəfə etmə](https://kecdim.pro-tech.az/bloq-sehv-defteri-metodu.html)
+- [Müəllim sertifikasiyası: 60 sual, 120 dəqiqə — plan və vaxt](https://kecdim.pro-tech.az/bloq-sertifikasiya-60-sual-120-deqiqe.html)
+- [Sınaq imtahanları niyə stresi azaldır](https://kecdim.pro-tech.az/bloq-sinaq-imtahan-niye-stresi-azaldir.html)
+- [İmtahandan əvvəlki son 24 saat: nə etməli, nə etməməli](https://kecdim.pro-tech.az/bloq-son-24-saat-plani.html)
+- [Sürət hədləri: imtahanda ən çox qarışdırılan rəqəmlər](https://kecdim.pro-tech.az/bloq-surucululuk-suret-hedleri.html)
+- [TOEFL iBT 2026: yenilənmiş format nə dəyişdi?](https://kecdim.pro-tech.az/bloq-toefl-2026-yeni-format.html)
+- [TR-YÖS nədir? Türkiyədə təhsil üçün imtahan haqqında əsaslar](https://kecdim.pro-tech.az/bloq-tr-yos-azerbaycanli-telebe.html)
+- [Azərbaycanlılar üçün Türk dili imtahanına hazırlıq: nələrə diqqət etməli?](https://kecdim.pro-tech.az/bloq-turk-dili-sinaq-hazirligi.html)
+- [İmtahan günü vaxtı necə bölməli: sual-vaxt düsturu](https://kecdim.pro-tech.az/bloq-vaxt-bolgusu.html)
+- [Yol nişanlarını yadda saxlamağın asan yolu: qruplarla öyrən](https://kecdim.pro-tech.az/bloq-yol-nisanlari.html)
+- [İmtahan öncəsi yuxu: niyə «gecə oxu» çox vaxt əks təsir edir](https://kecdim.pro-tech.az/bloq-yuxu-ve-imtahan.html)

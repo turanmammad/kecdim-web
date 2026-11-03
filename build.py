@@ -18,7 +18,8 @@ düzəlişlər növbəti ixracda itərdi. Bu skript hər dəfə eyni qaydaları 
   5. Mobil üçün responsiv düzəlişlər əlavə edir (dizayn sabit eni işlədir).
   6. Bloq yazılarına Article strukturlaşdırılmış datası qoşur.
 
-İşlətmə:  python3 build.py
+İşlətmə:  python3 build.py          — tam qurma (dizayn mənbəyi lazımdır) + post-proses
+          python3 build.py --post   — yalnız post-proses (mənbəsiz; çıxış fayllarına)
 """
 import html
 import re
@@ -27,6 +28,13 @@ import shutil
 from pathlib import Path
 
 SRC = Path.home() / "Desktop" / "KEÇDİM"
+# 🔴 03.11.2026: dizayn qovluğu `~/Desktop/Pro/Keçdim/`-ə köçüb. Oradakı Landing və
+# 4 bloq faylı «compressed,dataless»-dir (oxuyanda `Errno 60 Operation timed out`) —
+# yəni TAM qurma hazırda mümkün deyil. Canlı mənbə Claude Design layihəsidir
+# (`5fbfb99f-a61e-4710-a7ea-37aad4d1b1ed`). Mənbə əlçatmazdırsa `--post` rejimi
+# yalnız çıxış fayllarına post-proses qaydalarını tətbiq edir (aşağıda `post()`).
+if not SRC.exists():
+    SRC = Path.home() / "Desktop" / "Pro" / "Keçdim"
 OUT = Path(__file__).resolve().parent
 SITE = "https://kecdim.pro-tech.az"
 
@@ -91,13 +99,29 @@ def store_url(store: str, campaign: str) -> str:
 # Səhifədəki yerinə görə kampaniya adı: birinci cüt = hero, ikinci = aşağı CTA.
 STORE_CAMPAIGNS = ["site_hero", "site_cta"]
 
+# ── Klik ölçməsi (GA4) ──────────────────────────────────────────────────────
+# 🔴 03.11.2026: əvvəl `#yukle` (ana səhifənin yükləmə bölməsinə LANGAR) da
+# `app_click` sayılırdı — yəni «mağazaya getdi» ilə «ana səhifəyə keçdi» eyni
+# hadisə idi və admin paneldəki «CTR → APP» şişirdilmiş çıxırdı.
+# İndi:  mağaza linki (apps.apple.com / play.google.com) → `app_click` (+store, placement)
+#        `#yukle` langarı                                  → `download_section_click`
+# `app_click` adı QƏSDƏN saxlanılıb: `kecdim-supabase/functions/blog-stats` onu oxuyur.
+# `a.href` (həll olunmuş URL) oxunur — mobil yönləndirmə skripti linki mağazaya
+# çevirəndən sonra da düz sayılsın.
+CLICK_JS = (
+    '<script>document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a");'
+    'if(!a||!window.gtag)return;var h=a.href||"",r=a.getAttribute("href")||"",'
+    'p=a.getAttribute("data-kd-store")||"",s=/apps\\.apple\\.com/.test(h)?"apple":/play\\.google\\.com/.test(h)?"play":"";'
+    'if(s){gtag("event","app_click",{page_path:location.pathname,link_url:h,store:s,placement:p,transport_type:"beacon"});}'
+    'else if(/#yukle$/.test(r)){gtag("event","download_section_click",{page_path:location.pathname,placement:p});}},true);</script>')
+
 # ── səhifə xəritəsi: mənbə → (çıxış, başlıq, təsvir, növ) ───────────────────
 PAGES = {
     "Keçdim Landing.dc.html": (
         "index.html",
         "Keçdim — Azərbaycanın imtahan hazırlığı platforması",
         "Sürücülük, buraxılış, Dövlət Qulluğu, MİQ, sertifikasiya və magistratura "
-        "imtahanlarına real formatda hazırlaş: 2200+ izahlı sual, sınaq imtahanları, fərdi plan.",
+        "imtahanlarına real formatda hazırlaş: 2 300+ izahlı sual, sınaq imtahanları, fərdi plan.",
         "website"),
     "Keçdim Bloq.dc.html": (
         "bloq.html",
@@ -300,7 +324,7 @@ def convert(src_name: str) -> str:
               f'gtag("config","{GA_ID}",{{"anonymize_ip":true,"allow_google_signals":false}});</script>'
               # App-a keçid ölçülür: bloq → «Yüklə» və ya mağaza linki.
               # Bunsuz «CTR → APP» sütunu heç vaxt real ola bilməz.
-              '<script>document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a");if(!a)return;var h=a.getAttribute("href")||"";if(/apps\\.apple\\.com|play\\.google\\.com/.test(h)||/#yukle$/.test(h)){if(window.gtag)gtag("event","app_click",{page_path:location.pathname,link_url:h});}},true);</script>')
+              + CLICK_JS)
 
     head = f"""<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -533,7 +557,7 @@ def build_new_posts():
                       f'gtag("config","{GA_ID}",{{"anonymize_ip":true,"allow_google_signals":false}});</script>'
               # App-a keçid ölçülür: bloq → «Yüklə» və ya mağaza linki.
               # Bunsuz «CTR → APP» sütunu heç vaxt real ola bilməz.
-              '<script>document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a");if(!a)return;var h=a.getAttribute("href")||"";if(/apps\\.apple\\.com|play\\.google\\.com/.test(h)||/#yukle$/.test(h)){if(window.gtag)gtag("event","app_click",{page_path:location.pathname,link_url:h});}},true);</script>')
+              + CLICK_JS)
         head = f"""<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{post['title']} | Keçdim</title>
@@ -689,7 +713,7 @@ def fix_pricing():
          "<span>✓ Bütün 6 imtahanda limitsiz tam sınaq</span>"
          "<span>✓ Bölmə üzrə detallı hesabat — hansı mövzuda zəifsən</span>"
          "<span>✓ Sınaq tarixçəsinin tam arxivi</span>"
-         "<span>✓ Reklamsız və offline istifadə</span>"),
+         "<span>✓ Reklamsız istifadə</span>"),
         ("<span>✓ Gündəlik sual limiti</span><span>✓ 1 sınaq imtahanı / gün</span>"
          "<span>✓ Əsas statistika</span><span>✓ Qeydiyyatsız istifadə</span>",
          "<span>✓ Səhvlərin təkrarı — həmişə limitsiz</span>"
@@ -705,9 +729,7 @@ def fix_pricing():
          "bu müddətdə bütün funksiyalar pulsuzdur. Açılandan sonra ödəniş App Store, Google Play və bank kartı "
          "(Visa / Mastercard) ilə mümkün olacaq. Qiymətlər Azərbaycan manatı (₼) ilədir, ƏDV daxildir.</div>",
          "<div style=\"font:600 14px Inter;color:#1C2321\">Keçdim+ necə alınır?</div>\n"
-         "<div style=\"font:400 13px/1.7 Inter;color:#6B7671;margin-top:6px\">Abunəlik saytdan bank kartı (Visa / Mastercard) "
-         "ilə alınır — ödəniş Kapital Bank üzərindən keçir. Tətbiqdəki hesabınla daxil ol, paketi seç, ödə: Keçdim+ həmin "
-         "hesabda dərhal açılır. Qiymətlər Azərbaycan manatı (₼) ilədir, ƏDV daxildir.</div>\n"
+         + PLUS_HOWTO_HTML + "\n"
          "<a href=\"/plus.html\" style=\"display:inline-flex;align-items:center;justify-content:center;height:44px;"
          "padding:0 22px;background:#16A34A;border-radius:12px;font:600 14px Inter;color:#FFFFFF;margin-top:14px\">Keçdim+ al</a>"),
     ]
@@ -720,6 +742,262 @@ def fix_pricing():
             print(f"   ⚠️  qiymət blokunda gözlənilən mətn tapılmadı: {old[:60]}…")
     f.write_text(t, encoding="utf-8")
     return n
+
+
+# «Keçdim+ necə alınır?» mətni — 03.11.2026 qərarı: saytda kartla BİRDƏFƏLİK paket,
+# tətbiqdə App Store / Google Play abunəsi (avtomatik yenilənir).
+PLUS_HOWTO_HTML = (
+    "<div style=\"font:400 13px/1.7 Inter;color:#6B7671;margin-top:6px\"><b>Saytda</b> — bank kartı (Visa / Mastercard) "
+    "ilə birdəfəlik paket: ödəniş Kapital Bank üzərindən keçir, avtomatik yenilənmir. Tətbiqdəki e-poçtunla daxil ol "
+    "(hesabın yoxdursa, yaranacaq), paketi seç, ödə — tətbiqdə eyni e-poçtla girəndə Keçdim+ avtomatik görünür. "
+    "<b>Tətbiqdə</b> — App Store / Google Play abunəsi: avtomatik yenilənir, mağaza hesabından idarə və ləğv olunur. "
+    "Saytda qiymətlər Azərbaycan manatı (₼) ilədir, ƏDV daxildir.</div>")
+
+# Sabit məzmun düzəlişləri — həqiqət mənbəyi canlı baza (03.11.2026 ölçüldü):
+#   exam_rules(driving): mock_total_questions=10, mock_duration_sec=900, max_mistakes=1
+#   exam_rules(masters): 95 sual, 12600 s; questions.qtype aktivlərdə YALNIZ 'single'
+#     (esse/açıq sual YOXDUR, «AI qiymətləndirmə» funksiyası da yoxdur)
+#   exam_rules(miq): 60 sual, 9000 s, bölmələr miq_specialty(40×2, min 34) +
+#     miq_pedagogy(20×1, min 6), pass_score 40 — «məntiq» bölməsi YOXDUR
+#   aktiv imtahanlarda aktiv sual: 2379 → aşağı yuvarlaq «2 300+»
+#     (sorğu: questions⋈topics⋈subjects⋈exams, status='active', t.is_active, e.is_active)
+#   offline hamı üçündür — Plus üstünlüyü DEYİL (yalnız «Reklamsız» Plus-dadır).
+# Sual sayı dəyişəndə QUESTIONS_LABEL-i yenilə (aşağı yuvarlaq, uydurma yox).
+QUESTIONS_LABEL = "2 300+"
+
+FACT_PAIRS = [
+    ("20 sual · 20 dəqiqə · keçid 17. Yol nişanları, üstünlük, manevr, cərimələr.",
+     "10 sual · 15 dəqiqə · ən çox 1 səhv. Yol nişanları, üstünlük, manevr, cərimələr."),
+    ("Məntiq, informatika və xarici dil. Esse tapşırığı və AI qiymətləndirmə ilə.",
+     "95 sual · 3 saat 30 dəqiqə. Məntiq, informatika və xarici dil üzrə qapalı test sualları."),
+    ("İxtisas + metodika + məntiq. İxtisasına görə sual bazası, müsahibə həddi şkalası.",
+     "60 sual · 150 dəqiqə. İxtisas + tədris metodikası, ixtisasına görə sual bazası; keçid 40 bal."),
+    ('<div style="font:800 26px Manrope,sans-serif;color:#FFFFFF">2000+</div>',
+     f'<div style="font:800 26px Manrope,sans-serif;color:#FFFFFF">{QUESTIONS_LABEL}</div>'),
+    ("hazırlaş: 2200+ izahlı sual", f"hazırlaş: {QUESTIONS_LABEL} izahlı sual"),
+    # Telefon maketi: «Günün sınağı» DYP formatındadır (10 sual)
+    (">20 sual · real format<", ">10 sual · real format<"),
+    (">12/20 →<", ">6/10 →<"),
+    # 17.09 çıxışından qalan köhnə dəyərlər (fix_pricing-in əvvəlki «yeni» mətni)
+    ("<span>✓ Reklamsız və offline istifadə</span>", "<span>✓ Reklamsız istifadə</span>"),
+    ("<div style=\"font:400 13px/1.7 Inter;color:#6B7671;margin-top:6px\">Abunəlik saytdan bank kartı (Visa / Mastercard) "
+     "ilə alınır — ödəniş Kapital Bank üzərindən keçir. Tətbiqdəki hesabınla daxil ol, paketi seç, ödə: Keçdim+ həmin "
+     "hesabda dərhal açılır. Qiymətlər Azərbaycan manatı (₼) ilədir, ƏDV daxildir.</div>",
+     PLUS_HOWTO_HTML),
+]
+
+
+def fix_facts():
+    """Ana səhifədəki fakt səhvlərini canlı bazaya uyğunlaşdırır (bax FACT_PAIRS).
+    İdempotentdir; gözlənilən mətn tapılmasa (və yeni mətn də yoxdursa) xəbərdarlıq."""
+    f = OUT / "index.html"
+    t = f.read_text(encoding="utf-8")
+    n = 0
+    for old, new in FACT_PAIRS:
+        if old in t:
+            t = t.replace(old, new)
+            n += 1
+        elif new not in t:
+            print(f"   ⚠️  fakt düzəlişi: gözlənilən mətn tapılmadı: {old[:70]}…")
+    f.write_text(t, encoding="utf-8")
+    return n
+
+
+# ── Mobil başlıq ────────────────────────────────────────────────────────────
+# 🔴 03.11.2026: 360–390 px-də loqo «Keç/dim» iki sətrə bölünürdü və «Bloq» linki
+# kəsilirdi — nav-da 5 link + düymə dar ekrana sığmırdı. Dizayn sabit enlidir,
+# ona görə qayda bütün səhifələrə ayrıca <style id="kd-mobile"> bloku kimi
+# yazılır (təkrar işlədiləndə əvəzlənir, ikiqat düşmür).
+MOBILE_CSS = """
+/* loqo heç vaxt bölünmür (yalnız NAV-dakı loqo — eyni şrift başqa başlıqlarda da var) */
+[style*="padding:16px 32px;display:flex;align-items:center;gap:36px"]>[style*="font:800 24px Manrope"]{white-space:nowrap;flex:none}
+@media (max-width:720px){
+  [style*="padding:16px 32px;display:flex;align-items:center;gap:36px"]{gap:14px!important;padding:12px 16px!important}
+  [style*="display:flex;gap:26px;font:500 14px Inter;margin-left:auto"]{gap:14px!important}
+  [style*="display:flex;gap:26px;font:500 14px Inter;margin-left:auto"]>a:not([href="/bloq.html"]){display:none}
+}
+@media (max-width:420px){
+  [style*="padding:16px 32px;display:flex;align-items:center;gap:36px"]>[style*="font:800 24px Manrope"]{font-size:21px!important}
+  [style*="padding:16px 32px;display:flex;align-items:center;gap:36px"]>[style*="font:800 24px Manrope"] [style*="font:600 13px Inter"]{font-size:12px!important;margin-left:4px!important}
+  [style*="padding:16px 32px;display:flex;align-items:center;gap:36px"]{gap:10px!important;padding:10px 14px!important}
+  [style*="padding:16px 32px;display:flex;align-items:center;gap:36px"]>a[style*="padding:11px 22px"]{padding:9px 14px!important;font-size:13px!important;white-space:nowrap;flex:none}
+  [style*="display:flex;gap:26px;font:500 14px Inter;margin-left:auto"]>a{white-space:nowrap}
+}
+/* bloq.html: dizaynın min-width blokları və siyahı sətirləri 360–390 px-də üfüqi
+   sürüşmə yaradırdı (ölçüldü: scrollWidth 486 / innerWidth 360) — mətn kənardan kəsilirdi */
+@media (max-width:600px){
+  [style*="min-width:380px"],[style*="min-width:340px"],[style*="min-width:320px"],
+  [style*="min-width:300px"]{min-width:0!important;flex-basis:100%!important;box-sizing:border-box}
+  [style*="minmax(330px,1fr)"]{grid-template-columns:1fr!important}
+  a[style*="display:flex;align-items:center;gap:18px;padding:18px 0"]{flex-wrap:wrap;gap:4px 12px!important}
+  a[style*="display:flex;align-items:center;gap:18px;padding:18px 0"]>span[style*="width:118px"]{width:auto!important}
+  a[style*="display:flex;align-items:center;gap:18px;padding:18px 0"]>span[style*="flex:1"]{flex:1 1 100%!important;order:2}
+  a[style*="display:flex;align-items:center;gap:18px;padding:18px 0"]>span[style*="font:400 12px"]{order:3}
+  a[style*="display:flex;align-items:center;gap:18px;padding:18px 0"]>span[style*="color:#16A34A;font:600 15px"]{display:none}
+}
+"""
+
+
+def inject_mobile_css():
+    n = 0
+    block = f'<style id="kd-mobile">{MOBILE_CSS}</style>'
+    for f in sorted(OUT.glob("*.html")):
+        t = f.read_text(encoding="utf-8")
+        if "<!-- NAV" not in t:
+            continue
+        out = re.sub(r'<style id="kd-mobile">.*?</style>\n?', "", t, flags=re.S)
+        out = out.replace("</head>", block + "\n</head>", 1)
+        if out != t:
+            f.write_text(out, encoding="utf-8")
+            n += 1
+    return n
+
+
+# ── GA klik dinləyicisi bütün səhifələrdə yeni versiyaya ─────────────────────
+def inject_click_tracking():
+    n = 0
+    for f in sorted(OUT.glob("*.html")):
+        t = f.read_text(encoding="utf-8")
+        out = re.sub(r'<script>document\.addEventListener\("click",function\(e\)\{var a=e\.target\.closest.*?</script>',
+                     lambda m: CLICK_JS, t, flags=re.S)
+        if out != t:
+            f.write_text(out, encoding="utf-8")
+            n += 1
+    return n
+
+
+# ── Bloq «Tətbiqi yüklə» → birbaşa mağaza (cihaza görə) ─────────────────────
+# 🔴 03.11.2026: bloqdakı bütün «yüklə» düymələri `/#yukle`-yə (ana səhifə) gedirdi —
+# telefonda oxucu əvvəl ana səhifəyə, sonra ikinci kliklə mağazaya çatırdı.
+# İndi iPhone/iPad → App Store, Android → Google Play (UTM/ct ilə); masaüstündə
+# link `/#yukle` qalır (orada hər iki mağaza nişanı var, QR yoxdur).
+# `data-kd-store` = yerləşmə adı → Apple `ct`, Play `utm_campaign` (+ utm_content=slug).
+BLOG_STORE_PLACEMENTS = [
+    # (anchor-un hərfi başlanğıcı, placement)
+    ('<a href="/#yukle" style="padding:11px 22px;', "blog_nav"),
+    ('<a href="/#yukle" style="padding:13px 26px;', "blog_cta"),
+    ('<a href="/#yukle">Keçdim-i yüklə</a>', "blog_related"),
+    ('<a href="/#yukle" style="color:#22C55E">', "blog_footer"),
+]
+
+
+def _store_js() -> str:
+    apple = APP_STORE + "?" + (f"pt={ASC_PROVIDER_TOKEN}&" if ASC_PROVIDER_TOKEN else "") + "ct="
+    return (
+        '<script id="kd-store">(function(){var u=navigator.userAgent||"",'
+        'ios=/iPhone|iPad|iPod/.test(u)||(/Macintosh/.test(u)&&navigator.maxTouchPoints>1),and=/Android/i.test(u);'
+        'if(!ios&&!and)return;var slug=location.pathname.replace(/^\\/|\\.html$/g,"")||"index";'
+        'document.querySelectorAll("a[data-kd-store]").forEach(function(a){var c=a.getAttribute("data-kd-store");'
+        f'a.href=ios?"{apple}"+c:"{PLAY_STORE}&referrer="+encodeURIComponent("utm_source={UTM_SOURCE}&utm_medium=blog&utm_campaign="+c+"&utm_content="+slug);'
+        'a.removeAttribute("target");});})();</script>')
+
+
+def inject_store_links():
+    n = 0
+    js = _store_js()
+    files = sorted(OUT.glob("bloq-*.html")) + [OUT / "bloq.html"]
+    for f in files:
+        t = f.read_text(encoding="utf-8")
+        out = t
+        for start, place in BLOG_STORE_PLACEMENTS:
+            tagged = start.replace('<a href="/#yukle"', f'<a href="/#yukle" data-kd-store="{place}"', 1)
+            out = out.replace(start, tagged)
+        out = re.sub(r'<script id="kd-store">.*?</script>\n?', "", out, flags=re.S)
+        if "data-kd-store=" in out:
+            out = out.replace("</body>", js + "\n</body>", 1)
+        if out != t:
+            f.write_text(out, encoding="utf-8")
+            n += 1
+    return n
+
+
+# ── llms.txt — AI axtarış/cavab sistemləri üçün saytın qısa xəritəsi ──────────
+LLMS_TXT = """# Keçdim
+
+> Keçdim — Azərbaycanda imtahanlara hazırlıq tətbiqi (iOS və Android). Real formatda sınaq
+> imtahanları, izahlı suallar, səhvlərin təkrarı və imtahan təqvimi. Azərbaycan dilində.
+> Keçdim müstəqil hazırlıq tətbiqidir — DİM, DYP və dövlət qurumları ilə rəsmi əlaqəsi yoxdur.
+> Məhsul sahibi: Protech (PROTECH SOLUTIONS GROUP, MMC), Bakı.
+
+## İmtahanlar (tətbiqdəki sınaq formatı)
+
+- Sürücülük · DYP nəzəri imtahanı — 10 sual, 15 dəqiqə, ən çox 1 səhv
+- Dövlət Qulluğu — 100 sual, 3 saat; qanunvericilik, məntiq, informatika, Azərbaycan dili
+- MİQ (müəllimlərin işə qəbulu) — 60 sual, 150 dəqiqə; ixtisas + tədris metodikası; keçid 40 bal (ixtisas ≥34, metodika ≥6)
+- Müəllim sertifikasiyası — 60 sual, 120 dəqiqə; keçid 30 bal
+- Magistratura — 95 sual, 3 saat 30 dəqiqə; məntiq, informatika, xarici dil (qapalı test sualları)
+- Buraxılış (11-ci sinif) — 56 sual, 3 saat; Azərbaycan dili, xarici dil, riyaziyyat
+
+Sual bazası: {questions} izahlı sual. Formatlar Keçdim-də modelləşdirilir; rəsmi qaydalar dəyişə bilər.
+
+## Qiymət
+
+- Pulsuz: tətbiq qeydiyyatsız işləyir, gündəlik pulsuz sual limiti, səhvlərin təkrarı həmişə pulsuz, offline həll.
+- Keçdim+ (saytda bank kartı ilə, birdəfəlik, avtomatik yenilənmir): {plans}.
+- Keçdim+ tətbiqdə: App Store / Google Play abunəsi, avtomatik yenilənir; qiymət mağazada göstərilir.
+
+## Əsas səhifələr
+
+- [Ana səhifə]({site}/): imtahanlar, xüsusiyyətlər, qiymət
+- [Keçdim+ al]({site}/plus.html): saytda kartla birdəfəlik alış
+- [Abunə və ödəniş şərtləri]({site}/odenis.html)
+- [İstifadə şərtləri]({site}/terms.html)
+- [Məxfilik siyasəti]({site}/privacy.html)
+- [Dəstək]({site}/support.html)
+- [Bloq]({site}/bloq.html)
+
+## Tətbiq
+
+- [App Store]({apple})
+- [Google Play]({play})
+
+## Bloq yazıları
+
+{posts}
+"""
+
+# plus_plans cədvəlinin 03.11.2026 canlı dəyərləri (db: code, title, months, price_azn).
+PLUS_PLANS_TEXT = "1 ay — 5,99 ₼ · 3 ay — 14,99 ₼ · 1 il — 35,99 ₼"
+
+
+def write_llms_txt():
+    posts = []
+    for f in sorted(OUT.glob("bloq-*.html")):
+        t = f.read_text(encoding="utf-8")
+        m = re.search(r"<title>(.*?)(?:\s*\|\s*Keçdim)?</title>", t, re.S)
+        title = html.unescape(m.group(1).strip()) if m else f.stem
+        posts.append(f"- [{title}]({SITE}/{f.name})")
+    body = LLMS_TXT.format(questions=QUESTIONS_LABEL, plans=PLUS_PLANS_TEXT, site=SITE,
+                           apple=APP_STORE, play=PLAY_STORE, posts="\n".join(posts))
+    (OUT / "llms.txt").write_text(body, encoding="utf-8")
+    return len(posts)
+
+
+# Sitemap-a düşən statik səhifələr (bloq yazıları qovluqdan avtomatik yığılır).
+# 🔴 confirmed.html / odenis-netice.html QƏSDƏN yoxdur — axın səhifələridir.
+SITEMAP_STATIC = ["plus.html", "odenis.html", "privacy.html", "support.html", "terms.html"]
+
+
+def write_sitemap():
+    # 🔴 03.11.2026: əvvəl siyahı yalnız PAGES + NEW_POSTS-dan qurulurdu — tools/gen_posts.py
+    # ilə əlavə olunan 20 yazı və plus.html ora düşmürdü. İndi bloq-*.html faylları
+    # qovluqdan yığılır.
+    urls = [SITE + "/", SITE + "/bloq.html"] \
+        + [SITE + "/" + f.name for f in sorted(OUT.glob("bloq-*.html"))] \
+        + [SITE + "/" + n for n in SITEMAP_STATIC if (OUT / n).exists()]
+    # 🔴 `lastmod` (04.09.2026): tarix faylın ÖZ dəyişmə vaxtındandır — uydurulmur.
+    def _lastmod(u: str) -> str:
+        f = OUT / (u.rsplit("/", 1)[-1] or "index.html")
+        if not f.exists():
+            f = OUT / "index.html"
+        return dt.datetime.fromtimestamp(f.stat().st_mtime, dt.timezone.utc).date().isoformat()
+
+    sm = ('<?xml version="1.0" encoding="UTF-8"?>\n'
+          '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+          + "".join(f"  <url><loc>{u}</loc><lastmod>{_lastmod(u)}</lastmod></url>\n" for u in urls)
+          + "</urlset>\n")
+    (OUT / "sitemap.xml").write_text(sm, encoding="utf-8")
+    return len(urls)
 
 
 def inject_ga_static():
@@ -756,44 +1034,21 @@ def _gverify() -> str:
     return f'<meta name="google-site-verification" content="{GOOGLE_VERIFY_META}">\n'
 
 
-def main() -> None:
-    written = []
-    for src in PAGES:
-        if not (SRC / src).exists():
-            raise SystemExit(f"🔴 mənbə yoxdur: {src}")
-        out = PAGES[src][0]
-        (OUT / out).write_text(convert(src), encoding="utf-8")
-        written.append(out)
+def post() -> None:
+    """Çıxış fayllarına post-proses qaydaları — dizayn mənbəyi lazım DEYİL.
 
-    written += build_new_posts()
-    n = inject_index_cards()
+    Tam qurmadan sonra `main()` bunu çağırır; mənbə əlçatmaz olanda (bax SRC
+    qeydi) və ya `tools/gen_posts.py`-dan sonra `python3 build.py --post` ilə
+    tək işlədilir. Hər addım idempotentdir.
+    """
     inject_ga_static()
+    fx = fix_facts()        # əvvəl: köhnə çıxış mətnlərini yeni dəyərlərə köçürür
     px = fix_pricing()
-    rel = inject_related()
-
-    # sitemap + robots
-    urls = [SITE + "/"] + [
-        SITE + "/" + p[0] for p in PAGES.values() if p[0] != "index.html"
-    ] + [SITE + f"/bloq-{p['slug']}.html" for p in NEW_POSTS] \
-      + [SITE + "/privacy.html", SITE + "/support.html", SITE + "/terms.html",
-         SITE + "/odenis.html"]
-    # 🔴 `lastmod` əlavə olundu (04.09.2026): sitemap yalnız `<loc>` verirdi.
-    # URL Inspection göstərdi ki, 12 bloq səhifəsinin heç biri taranmayıb
-    # («URL Google-a məlum deyil»), ana səhifə isə 22 Avqustdan bəri
-    # yenidən taranmayıb — yəni ondan sonra əlavə olunan bloq kartlarını
-    # Google hələ görməyib. `lastmod` tarama prioritetini artırır.
-    # Tarix faylın ÖZ dəyişmə vaxtındandır — uydurulmur.
-    def _lastmod(u: str) -> str:
-        f = OUT / u.rsplit("/", 1)[-1]
-        if not f.exists():
-            f = OUT / "index.html"
-        return dt.datetime.fromtimestamp(f.stat().st_mtime, dt.timezone.utc).date().isoformat()
-
-    sm = ('<?xml version="1.0" encoding="UTF-8"?>\n'
-          '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-          + "".join(f"  <url><loc>{u}</loc><lastmod>{_lastmod(u)}</lastmod></url>\n" for u in urls)
-          + "</urlset>\n")
-    (OUT / "sitemap.xml").write_text(sm, encoding="utf-8")
+    ck = inject_click_tracking()
+    st = inject_store_links()
+    mb = inject_mobile_css()
+    nurl = write_sitemap()
+    nl = write_llms_txt()
     # IndexNow açarı — Bing/Yandex-ə yeni URL-ləri dərhal bildirmək üçün.
     # 🔴 Google IndexNow-u DƏSTƏKLƏMİR (onun sitemap ping-i də 2023-də ləğv olundu),
     # ona görə Google tərəfi Search Console ilə gedir.
@@ -809,12 +1064,34 @@ def main() -> None:
     (OUT / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
 
+    print(f"   + qiymət bloku: {px} əvəzləmə · fakt düzəlişi: {fx} əvəzləmə")
+    print(f"   + klik ölçməsi yeniləndi: {ck} səhifə · bloq mağaza linkləri: {st} səhifə")
+    print(f"   + mobil başlıq CSS: {mb} səhifə")
+    print(f"   + sitemap.xml ({nurl} URL) + robots.txt + llms.txt ({nl} yazı)")
+
+
+def main() -> None:
+    written = []
+    for src in PAGES:
+        if not (SRC / src).exists():
+            raise SystemExit(f"🔴 mənbə yoxdur: {src}")
+        out = PAGES[src][0]
+        (OUT / out).write_text(convert(src), encoding="utf-8")
+        written.append(out)
+
+    written += build_new_posts()
+    n = inject_index_cards()
+    rel = inject_related()
     print(f"   ↳ {n} yeni yazı bloq siyahısına əlavə edildi")
     print(f"✅ {len(written)} səhifə quruldu: {', '.join(written)}")
-    print(f"   + sitemap.xml ({len(urls)} URL) + robots.txt")
     print(f"   + «Oxşar yazılar» bloku: {rel} səhifə")
-    print(f"   + qiymət bloku real dəyərlərə çevrildi: {px} əvəzləmə")
+    print("   🔴 tools/gen_posts.py yazıları üçün: python3 tools/gen_posts.py && python3 build.py --post")
+    post()
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    if "--post" in sys.argv:
+        post()
+    else:
+        main()
