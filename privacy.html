@@ -33,7 +33,7 @@
     <strong>Keçdim</strong>
   </header>
   <h1>Məxfilik Siyasəti</h1>
-  <div class="date">Qüvvəyə minmə tarixi: 25 iyul 2026</div>
+  <div class="date">Qüvvəyə minmə tarixi: 25 iyul 2026 · Son yenilənmə: 3 noyabr 2026</div>
 
   <p>Keçdim (“tətbiq”) imtahan hazırlığı üçün təhsil tətbiqidir. Bu siyasət hansı məlumatı topladığımızı,
      niyə topladığımızı və onu necə qoruduğumuzu izah edir. Məxfiliyinə hörmət edirik və məlumatını
@@ -43,16 +43,24 @@
   <div class="card">
   <ul>
     <li><b>Hesab məlumatı:</b> tətbiq açılanda avtomatik anonim identifikator yaradılır. Könüllü qeydiyyatdan
-        keçsən, <b>e-poçt ünvanın və parolun</b> (şifrələnmiş) saxlanılır.</li>
+        keçsən, <b>e-poçt ünvanın</b> saxlanılır (giriş e-poçta göndərilən birdəfəlik kodla olur, parol yoxdur).
+        Profildə istəsən <b>adını</b> yaza bilərsən.</li>
     <li><b>Təhsil fəaliyyəti:</b> sınaq nəticələrin, verdiyin cavablar, səhvlərin, ardıcıllıq (streak),
         seçdiyin imtahan və qeyd etdiyin imtahan tarixi.</li>
     <li><b>Bildiriş:</b> push bildirişləri göndərmək üçün cihazının bildiriş tokeni.</li>
+    <li><b>Abunə və ödəniş:</b> Keçdim+ alanda alışın identifikatoru, paket və bitmə tarixi. Tətbiqdə ödəniş
+        App Store və ya Google Play ilə, saytda bank kartı ilə (Kapital Bank) aparılır — kart məlumatın bizə
+        gəlmir, onu yalnız ödəniş təchizatçısı emal edir.</li>
+    <li><b>Sual bildirişləri:</b> sualda səhv bildirəndə yazdığın qısa qeyd.</li>
+    <li><b>Xəta hesabatları:</b> tətbiq çökəndə və ya xəta verəndə texniki məlumat (xəta mətni, cihaz modeli,
+        əməliyyat sistemi versiyası). Ad, e-poçt və IP ünvanı bu hesabata qoşulmur.</li>
   </ul>
   </div>
 
   <h2>Niyə toplayırıq</h2>
   <p>Məlumat yalnız: (1) təhsil xidmətini təqdim etmək, (2) irəliləyişini saxlamaq və cihazlar arasında
-     sinxronlaşdırmaq, (3) istəsən xatırlatma bildirişləri göndərmək üçün istifadə olunur.
+     sinxronlaşdırmaq, (3) istəsən xatırlatma bildirişləri göndərmək, (4) Keçdim+ abunəni aktivləşdirmək,
+     (5) xətaları tapıb düzəltmək üçün istifadə olunur.
      Məlumatını <b>satmırıq</b> və reklam məqsədilə istifadə etmirik.</p>
 
   <h2>Üçüncü tərəf xidmətləri</h2>
@@ -60,13 +68,20 @@
   <ul>
     <li><b>Supabase</b> — məlumat saxlama və autentifikasiya.</li>
     <li><b>Google Firebase Cloud Messaging</b> — push bildirişlərin çatdırılması.</li>
+    <li><b>Apple App Store və Google Play</b> — tətbiqdaxili abunə ödənişi.</li>
+    <li><b>Kapital Bank</b> — saytda kartla ödəniş.</li>
+    <li><b>Sentry</b> — xəta hesabatları.</li>
   </ul>
   <p>Tətbiqdə reklam şəbəkələri və ya üçüncü tərəf izləmə (tracking) vasitələri <b>yoxdur</b>.</p>
 
-  <h2>Məlumatın saxlanması və silinməsi</h2>
+  <h2 id="hesab-silme">Məlumatın saxlanması və hesabın silinməsi</h2>
   <p>Məlumatın hesabın aktiv olduğu müddətdə saxlanılır. İstədiyin vaxt tətbiqin içindən
      <b>Profil → Parametrlər → Hesabı sil</b> vasitəsilə hesabını və bütün əlaqəli məlumatı
      həmişəlik silə bilərsən. Silmə dərhal serverdən icra olunur.</p>
+  <p>Tətbiqə girə bilmirsənsə, hesabına bağlı e-poçtdan <a href="mailto:info@pro-tech.az?subject=Keçdim%20hesabın%20silinməsi">info@pro-tech.az</a>
+     ünvanına «Hesabımı silin» yaz — hesabını və bütün əlaqəli məlumatı (nəticələr, cavablar, bildiriş tokeni,
+     abunə qeydi) ən geci 30 gün ərzində silirik. Abunəni dayandırmaq üçün onu App Store / Google Play-də ayrıca ləğv et;
+     qanunla saxlanılması tələb olunan ödəniş qeydləri istisnadır.</p>
 
   <h2>Təhlükəsizlik</h2>
   <p>Məlumat sətir səviyyəsində icazələrlə (Row Level Security) qorunur — hər istifadəçi yalnız
